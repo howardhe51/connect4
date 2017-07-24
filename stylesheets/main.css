@@ -1,3 +1,10 @@
 body {
-  background: blue; 
+  background: white;
+}
+
+#game_title {
+  font-size: 50px;
+  text-align: center;
+  border-radius: 25px;
+  border-color: black;
 }

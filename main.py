@@ -20,6 +20,9 @@ class MainHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/main.html')
         self.response.write(template.render(template_vars))
 
+    #def post(self):
+
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
 ], debug=True)

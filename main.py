@@ -3,11 +3,20 @@ import os
 import jinja2
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
-
+from google.appengine.api import users
+from google.appengine.ext import ndb
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_environment.get_template('templates/home.html')
+        current_user = users.get_current_user()
+        logout_url = users.create_logout_url('/')
+        login_url = users.create_login_url('/')
+        template_vars = {
+            'current_user': current_user,
+            'logout_url': logout_url,
+            'login_url': login_url,
+        }
+        template = jinja_environment.get_template('templates/main.html')
         self.response.write(template.render())
 
 app = webapp2.WSGIApplication([

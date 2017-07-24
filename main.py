@@ -17,7 +17,7 @@ class MainHandler(webapp2.RequestHandler):
             'login_url': login_url,
         }
         template = jinja_environment.get_template('templates/main.html')
-        self.response.write(template.render())
+        self.response.write(template.render(template_vars))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)

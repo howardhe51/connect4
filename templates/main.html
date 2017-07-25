@@ -5,15 +5,18 @@
   <h1 id="game_title">Connect 4</h1>
 
   {% if current_user %}
-  
+
     <p></p>
     <a href="{{ logout_url }}">Logout</a>
 
 
   {% else %}
 
-    <a href="{{ login_url }}">Login</a>
-
+    <a href="{{ login_url }}">Login</a><br>
+    or <br>
+    <form action="/" method="post">
+      <button>Register</button>
+    </form>
   {% endif %}
 
 

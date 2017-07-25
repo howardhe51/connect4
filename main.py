@@ -7,6 +7,17 @@ from google.appengine.ext import ndb
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
+class User(ndb.Model):
+    name = ndb.StringProperty()
+    Bmonth = ndb.IntegerProperty()
+    Bday = ndb.IntegerProperty()
+    Byear = ndb.IntegerProperty()
+    email = ndb.StringProperty()
+    username = ndb.StringProperty()
+    win = ndb.IntegerProperty()
+    lose = ndb.IntegerProperty()
+
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
@@ -20,9 +31,54 @@ class MainHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/main.html')
         self.response.write(template.render(template_vars))
 
-    #def post(self):
+class SelectionHandler(webapp2.RequestHandler):
+    def get(self):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+class MoveHandler(webapp2.RequestHandler):
+    def get(self):
+
+
+
+
+
+
 
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+
 ], debug=True)

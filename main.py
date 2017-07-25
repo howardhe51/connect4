@@ -38,9 +38,14 @@ class MainHandler(webapp2.RequestHandler):
 
         self.redirect('/')
 
+class SelectionHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/game.html')
+        self.response.write(template.render())
 
-
-
+    def post(self):
+        gamemode = self.request.get('dropbox')
+        self.redirect('/select')
 
 
 
@@ -85,6 +90,6 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    
+    ('/select', SelectionHandler),
 
 ], debug=True)

@@ -36,12 +36,17 @@ class MainHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/main.html')
         self.response.write(template.render(template_vars))
 
+        def post(self):
 
+            self.redirect('/')
 
 class SelectionHandler(webapp2.RequestHandler):
     def get(self):
+        template = jinja_environment.get_template('templates/game.html')
+        self.response.write(template.render(template_vars))
 
-
+    def post(self):
+        gamemode = self.request.get('dropbox')
 
 
 

@@ -10,12 +10,28 @@ body {
 }
 
 #log_button {
+  background-color: black;
+  color: white;
   position: relative;
-  left: 50%;
+  left: 43%;
   width: 200px;
   height: 100px;
   border-radius: 30px;
-  transform-origin: center left;
+  border-color: blue;
+  box-shadow: 0;
+  transform-origin: center;
   font-weight: bold;
   font-size: 30px;
+}
+#log_button2 {
+  background-color: black;
+  color: white;
+  position: relative;
+  left: 90%;
+  border-radius: 30px;
+  border-color: blue;
+  box-shadow: 0;
+  transform-origin: center;
+  font-weight: bold;
+  font-size: 20px;
 }

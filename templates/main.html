@@ -5,14 +5,14 @@
     <title>Game selection</title>
     <link href="stylesheets/main.css" rel="stylesheet">
     <h1 id="game_title">Play Connect 4</h1>
-    Gamemode:
-    <select>
-        <option value="HvH">Human versus Human</option>
-        <option value="HvH">Human versus Computer</option>
-    <select>
-    <p></p>
-
-    <a href="{{ logout_url }}"><button id="log_button">Logout</button></a>
+    <section class="select_mode">
+        Gamemode:
+        <select>
+            <option name="dropbox" id="drop_selection" value="HvH">Human versus Human</option>
+            <option name="dropbox" id="drop_selection" value="HvC">Human versus Computer</option>
+        <select>
+    </section>
+    <a href="{{ logout_url }}"><button id="log_button2">Logout</button></a>
 
 
   {% else %}

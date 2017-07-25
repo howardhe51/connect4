@@ -9,9 +9,11 @@ jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.di
 
 class User(ndb.Model):
     name = ndb.StringProperty()
+    """
     Bmonth = ndb.IntegerProperty()
     Bday = ndb.IntegerProperty()
     Byear = ndb.IntegerProperty()
+    """
     email = ndb.StringProperty()
     username = ndb.StringProperty()
     win = ndb.IntegerProperty()
@@ -31,8 +33,11 @@ class MainHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/main.html')
         self.response.write(template.render(template_vars))
 
+
 class SelectionHandler(webapp2.RequestHandler):
     def get(self):
+        template = jinja_environment.get_template('templates/select.html')
+        self.response.write(template.render())
 
 
 
@@ -67,9 +72,8 @@ class SelectionHandler(webapp2.RequestHandler):
 
 
 
-    
-class MoveHandler(webapp2.RequestHandler):
-    def get(self):
+#class MoveHandler(webapp2.RequestHandler):
+#    def get(self):
 
 
 
@@ -80,5 +84,6 @@ class MoveHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/select', SelectionHandler),
 
 ], debug=True)

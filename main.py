@@ -45,10 +45,6 @@ class MainHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/main.html')
         self.response.write(template.render(template_vars))
 
-        def post(self):
-
-            self.redirect('/')
-
 class SelectionHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/game.html')
@@ -69,11 +65,14 @@ class SelectionHandler(webapp2.RequestHandler):
         new_game.put()
         self.redirect('/select')
 
-#class ProfileHandler(webapp2.RequestHandler):
-    #def get(self):
+class ProfileHandler(webapp2.RequestHandler):
+    def get(self):
 
-    #def post(self):
+        template = jinja_environment.get_template('templates/profile.html')
+        self.response.write(template.render())
 
+    def post(self):
+        self.redirect('/profile')
 
 
 
@@ -200,6 +199,11 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/select', SelectionHandler),
     ('/column', ColumnHandler),
+<<<<<<< HEAD
     #('/profile', ProfileHandler),
+=======
+    ('/profile', ProfileHandler),
+
+>>>>>>> 01a0b3aa25ac06ac6506e99536ecea61d278af76
 ], debug=True)
 #helloworld

@@ -54,6 +54,21 @@ class SelectionHandler(webapp2.RequestHandler):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class NewGameHandler(webapp2.RequestHandler):
     def get(self):
         board = [ [0,0,0,0,0,0,0],
@@ -66,7 +81,7 @@ class NewGameHandler(webapp2.RequestHandler):
         new_game = Game(board = board1)
         # 1. Create a new game when users go to /newgame
         # 2. Add handler (like /game/:id) to get an existing game, based on the Game id
-        # 3. When the user clicks on a column (JS), run the /selectionHandler to update the game
+        # 3. When the user clicks on a column (JS), run the /columnHandler to update the game
         # 4. The Game should keep track of whose turn it is (Python), and auto-refresh the UI if it's no that person's turn (JS)
 
 
@@ -77,6 +92,8 @@ class NewGameHandler(webapp2.RequestHandler):
 
 
 
+#class ColumnHandler(webapp2.RequestHandler):
+    #def post(self):
 
 
 

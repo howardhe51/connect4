@@ -35,7 +35,7 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(template.render(template_vars))
 
     def post(self):
-        
+
         self.redirect('/')
 
 
@@ -85,6 +85,6 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/select', SelectionHandler),
+    
 
 ], debug=True)

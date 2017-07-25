@@ -2,6 +2,7 @@ import webapp2
 import os
 import jinja2
 import json
+import logging
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -92,8 +93,73 @@ class NewGameHandler(webapp2.RequestHandler):
 
 
 
-#class ColumnHandler(webapp2.RequestHandler):
-    #def post(self):
+class ColumnHandler(webapp2.RequestHandler):
+    '''def get(self):
+            games = Game.query().fetch()
+            template_vars = {
+                'games': games,
+            }
+
+            template = jinja_environment.get_template('templates/game.html')
+            self.response.write(template.render(template_vars))'''
+    def post(self):
+          col = self.request.get('column')
+          logging.info(col)
+
+
+        # === 2: Interact with the database. ===
+
+        # Use the URLsafe key to get the photo from the DB.
+          '''if(board[col][5] == 0 && player == 1) {
+          board[col][5] = player;
+          player = 2;
+          }
+          else if(board[col][5] == 0 && player == 2) {
+            board[col][5] = player;
+            player = 1;
+          }
+          else if(board[col][4] == 0 && player == 1) {
+            board[col][4] = player;
+            player = 2;
+          }
+          else if(board[col][4] == 0 && player == 2) {
+            board[col][4] = player;
+            player = 1;
+          }
+          else if(board[col][3] == 0 && player == 1) {
+            board[col][3] = player;
+            player = 2;
+          }
+          else if(board[col][3] == 0 && player == 2) {
+            board[col][3] = player;
+            player = 1;
+          }
+          else if(board[col][2] == 0 && player == 1) {
+            board[col][2] = player;
+            player = 2;
+          }
+          else if(board[col][2] == 0 && player == 2) {
+            board[col][2] = player;
+            player = 1;
+          }
+          else if(board[col][1] == 0 && player == 1) {
+            board[col][1] = player;
+            player = 2;
+          }
+          else if(board[col][1] == 0 && player == 2) {
+            board[col][1] = player;
+            player = 1;
+          }
+          else if(board[col][0] == 0 && player == 1) {
+            board[col][0] = player;
+            player = 2;
+          }
+          else if(board[col][0] == 0 && player == 2) {
+            board[col][0] = player;
+            player = 1;
+          }
+            template = jinja_environment.get_template('templates/game.html')
+            self.response.write(template.render(template_vars))'''
 
 
 
@@ -115,5 +181,6 @@ class NewGameHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/select', SelectionHandler),
+    ('/column', ColumnHandler),
 ], debug=True)
 #helloworld

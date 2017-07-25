@@ -9,8 +9,14 @@ var board = [ [0,0,0,0,0,0],
 var player = 1;
 
 function clickColumn() {
+  var button = $(this);
   var col = Number($(this).attr('id'));
-  if(board[col][5] == 0 && player == 1) {
+  var urlsafeKey = $(button).val();
+  $.post('/column', {'column': col}, function(response) {
+    // Update the number in the "like" element.
+    $(col).text(response);
+  });
+  /*if(board[col][5] == 0 && player == 1) {
     board[col][5] = player;
     player = 2;
   }
@@ -58,7 +64,7 @@ function clickColumn() {
     board[col][0] = player;
     player = 1;
   }
-  console.log(board);
+  console.log(board);*/
 
 }
 

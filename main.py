@@ -8,15 +8,22 @@ from google.appengine.ext import ndb
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-class User(ndb.Model):
+class Profile(ndb.Model):
     name = ndb.StringProperty()
-    Bmonth = ndb.IntegerProperty()
-    Bday = ndb.IntegerProperty()
-    Byear = ndb.IntegerProperty()
+    #Bmonth = ndb.IntegerProperty()
+    #Bday = ndb.IntegerProperty()
+    #Byear = ndb.IntegerProperty()
     email = ndb.StringProperty()
     username = ndb.StringProperty()
     win = ndb.IntegerProperty()
     lose = ndb.IntegerProperty()
+
+class User(ndb.Model):
+    name = ndb.StringProperty()
+    email = ndb.StringProperty()
+    iden = ndb.IntegerProperty()
+    user_key = ndb.KeyProperty(kind = Profile)
+
 class Game(ndb.Model):
     board = ndb.JsonProperty()
     # Might want to have a `winner` UserProperty
@@ -49,6 +56,10 @@ class SelectionHandler(webapp2.RequestHandler):
         gamemode = self.request.get('dropbox')
         self.redirect('/select')
 
+#class ProfileHandler(webapp2.RequestHandler):
+    #def get(self):
+
+    #def post(self):
 
 
 
@@ -115,5 +126,6 @@ class NewGameHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/select', SelectionHandler),
+    #('/profile', ProfileHandler),
 ], debug=True)
 #helloworld

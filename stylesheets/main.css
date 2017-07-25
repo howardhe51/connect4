@@ -8,3 +8,14 @@ body {
   border-radius: 25px;
   border-color: black;
 }
+
+#log_button {
+  position: relative;
+  left: 50%;
+  width: 200px;
+  height: 100px;
+  border-radius: 30px;
+  transform-origin: center left;
+  font-weight: bold;
+  font-size: 30px;
+}

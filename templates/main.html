@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <title>Connect 4</title>
-  <link href="stylesheets/main.css" rel="stylesheet">
-  <h1 id="game_title">Connect 4</h1>
-
+<link href="stylesheets/main.css" rel="stylesheet">
   {% if current_user %}
-
+    <title>Game selection</title>
+    <h1 id="game_title">Play Connect 4</h1>
+    Gamemode:
+    <select>
+        <option value="HvH">Human versus Human</option>
+        <option value="HvH">Human versus Computer</option>
+    <select>
     <p></p>
 
-    <a href="{{ logout_url }}">Logout</a>
+    <button id="log_button"><a href="{{ logout_url }}">Logout</a></button>
 
 
   {% else %}
+    <title>Connect 4</title>
+    <h1 id="game_title">Connect 4</h1>
     <form action="/select" method="post">
-      <button><a href="{{ login_url }}">Login</a></button>
+      <button id="log_button"><a href="{{ login_url }}">Login</a></button>
     </form>
   {% endif %}
 
-
+</html>
 
 
 

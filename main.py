@@ -29,15 +29,16 @@ class MainHandler(webapp2.RequestHandler):
             'current_user': current_user,
             'logout_url': logout_url,
             'login_url': login_url,
+
         }
         template = jinja_environment.get_template('templates/main.html')
         self.response.write(template.render(template_vars))
 
+    def post(self):
+        
+        self.redirect('/')
 
-class SelectionHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/select.html')
-        self.response.write(template.render())
+
 
 
 

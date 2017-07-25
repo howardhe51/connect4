@@ -59,7 +59,6 @@ class SelectionHandler(webapp2.RequestHandler):
                   [0,0,0,0,0,0],
                   [0,0,0,0,0,0],
                   [0,0,0,0,0,0]]
-        board = game.board
         player = 1
         new_game = Game(board = board, player = player)
         new_game.put()
@@ -199,11 +198,6 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/select', SelectionHandler),
     ('/column', ColumnHandler),
-<<<<<<< HEAD
-    #('/profile', ProfileHandler),
-=======
-    ('/profile', ProfileHandler),
-
->>>>>>> 01a0b3aa25ac06ac6506e99536ecea61d278af76
-], debug=True)
+#('/profile', ProfileHandler),
+    ], debug=True)
 #helloworld

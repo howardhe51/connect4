@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
-<link href="stylesheets/main.css" rel="stylesheet">
+
   {% if current_user %}
     <title>Game selection</title>
+    <link href="stylesheets/main.css" rel="stylesheet">
     <h1 id="game_title">Play Connect 4</h1>
     Gamemode:
     <select>
@@ -11,15 +12,14 @@
     <select>
     <p></p>
 
-    <button id="log_button"><a href="{{ logout_url }}">Logout</a></button>
+    <a href="{{ logout_url }}"><button id="log_button">Logout</button></a>
 
 
   {% else %}
     <title>Connect 4</title>
+    <link href="stylesheets/main.css" rel="stylesheet">
     <h1 id="game_title">Connect 4</h1>
-    <form action="/select" method="post">
-      <button id="log_button"><a href="{{ login_url }}">Login</a></button>
-    </form>
+    <a href="{{ login_url }}"><button id="log_button">Login</button></a>
   {% endif %}
 
 </html>

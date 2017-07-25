@@ -27,6 +27,7 @@ class User(ndb.Model):
 
 class Game(ndb.Model):
     board = ndb.JsonProperty()
+    player = ndb.IntegerProperty()
     # Might want to have a `winner` UserProperty
     # Keep track of user1 and user2
 
@@ -55,6 +56,17 @@ class SelectionHandler(webapp2.RequestHandler):
 
     def post(self):
         gamemode = self.request.get('dropbox')
+        board = [ [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0]]
+        board = game.board
+        player = 1
+        new_game = Game(board = board, player = player)
+        new_game.put()
         self.redirect('/select')
 
 #class ProfileHandler(webapp2.RequestHandler):
@@ -83,14 +95,14 @@ class SelectionHandler(webapp2.RequestHandler):
 
 class NewGameHandler(webapp2.RequestHandler):
     def get(self):
-        board = [ [0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0],
-                      [0,0,0,0,0,0,0],
-                      [0,0,0,0,0,0,0],
-                      [0,0,0,0,0,0,0],
-                      [0,0,0,0,0,0,0]]
-        board1 = json.dumps(board)
-        new_game = Game(board = board1)
+        board = [ [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0],
+                  [0,0,0,0,0,0]]
+        new_game = Game(board = board, player =1)
         # 1. Create a new game when users go to /newgame
         # 2. Add handler (like /game/:id) to get an existing game, based on the Game id
         # 3. When the user clicks on a column (JS), run the /columnHandler to update the game
@@ -114,63 +126,58 @@ class ColumnHandler(webapp2.RequestHandler):
             template = jinja_environment.get_template('templates/game.html')
             self.response.write(template.render(template_vars))'''
     def post(self):
-          col = self.request.get('column')
+          col = int(self.request.get('column'))
           logging.info(col)
-
+          game = Game.query().get()
+          board = json.loads(game.board)
 
         # === 2: Interact with the database. ===
 
         # Use the URLsafe key to get the photo from the DB.
-          '''if(board[col][5] == 0 && player == 1) {
-          board[col][5] = player;
-          player = 2;
-          }
-          else if(board[col][5] == 0 && player == 2) {
-            board[col][5] = player;
-            player = 1;
-          }
-          else if(board[col][4] == 0 && player == 1) {
-            board[col][4] = player;
-            player = 2;
-          }
-          else if(board[col][4] == 0 && player == 2) {
-            board[col][4] = player;
-            player = 1;
-          }
-          else if(board[col][3] == 0 && player == 1) {
-            board[col][3] = player;
-            player = 2;
-          }
-          else if(board[col][3] == 0 && player == 2) {
-            board[col][3] = player;
-            player = 1;
-          }
-          else if(board[col][2] == 0 && player == 1) {
-            board[col][2] = player;
-            player = 2;
-          }
-          else if(board[col][2] == 0 && player == 2) {
-            board[col][2] = player;
-            player = 1;
-          }
-          else if(board[col][1] == 0 && player == 1) {
-            board[col][1] = player;
-            player = 2;
-          }
-          else if(board[col][1] == 0 && player == 2) {
-            board[col][1] = player;
-            player = 1;
-          }
-          else if(board[col][0] == 0 && player == 1) {
-            board[col][0] = player;
-            player = 2;
-          }
-          else if(board[col][0] == 0 && player == 2) {
-            board[col][0] = player;
-            player = 1;
-          }
-            template = jinja_environment.get_template('templates/game.html')
-            self.response.write(template.render(template_vars))'''
+          if(board[col][5] == 0 and game.player == 1):
+                board[col][5] = game.player;
+                game.player = 2;
+
+          elif(board[col][5] == 0 and game.player == 2):
+            board[col][5] = game.player;
+            game.player = 1;
+          elif(board[col][4] == 0 and game.player == 1):
+            board[col][4] = game.player;
+            game.player = 2;
+          elif(board[col][4] == 0 and game.player == 2):
+            board[col][4] = game.player;
+            game.player = 1;
+          elif(board[col][3] == 0 and game.player == 1):
+            board[col][3] = game.player;
+            game.player = 2;
+          elif(board[col][3] == 0 and game.player == 2):
+            board[col][3] = game.player;
+            game.player = 1;
+          elif(board[col][2] == 0 and game.player == 1):
+            board[col][2] = game.player;
+            game.player = 2;
+          elif(board[col][2] == 0 and game.player == 2):
+            board[col][2] = game.player;
+            game.player = 1;
+          elif(board[col][1] == 0 and game.player == 1):
+            board[col][1] = game.player;
+            game.player = 2;
+          elif(board[col][1] == 0 and game.player == 2):
+            board[col][1] = game.player;
+            game.player = 1;
+          elif(board[col][0] == 0 and game.player == 1):
+            board[col][0] = game.player;
+            game.player = 2;
+          elif(board[col][0] == 0 and game.player == 2):
+            board[col][0] = game.player;
+            game.player = 1;
+          logging.info(board)
+          logging.info(game.player)
+          game.board = json.dumps(board)
+          game.put()
+          template = jinja_environment.get_template('templates/game.html')
+          self.response.write(template.render())
+
 
 
 
@@ -192,10 +199,7 @@ class ColumnHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/select', SelectionHandler),
-<<<<<<< HEAD
     ('/column', ColumnHandler),
-=======
     #('/profile', ProfileHandler),
->>>>>>> 14e10183e432838125217b63a904138c1d054a54
 ], debug=True)
 #helloworld

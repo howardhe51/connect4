@@ -36,7 +36,6 @@ class MainHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/main.html')
         self.response.write(template.render(template_vars))
 
-# This handler will take in the column that the user selected
 class SelectionHandler(webapp2.RequestHandler):
     def get(self):
 
@@ -79,18 +78,9 @@ class NewGameHandler(webapp2.RequestHandler):
 
 
 
+#class MoveHandler(webapp2.RequestHandler):
+    #def get(self):
 
-
-
-
-
-
-
-
-
-class MoveHandler(webapp2.RequestHandler):
-    def get(self):
-    def post(self):
 
 
 

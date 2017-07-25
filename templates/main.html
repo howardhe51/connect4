@@ -15,14 +15,15 @@
             <button>Submit</button>
         </section>
       </form>
-    <a href="{{ logout_url }}"><button id="log_button2">Logout</button></a>
-
+     <a href="{{ logout_url }}"><button id="log_button2">Logout</button></a>
 
   {% else %}
+
     <title>Connect 4</title>
     <link href="stylesheets/main.css" rel="stylesheet">
     <h1 id="game_title">Connect 4</h1>
     <a href="{{ login_url }}"><button id="log_button">Login</button></a>
+
   {% endif %}
 
 </html>

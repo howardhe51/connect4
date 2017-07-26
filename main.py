@@ -188,16 +188,20 @@ class ColumnHandler(webapp2.RequestHandler):
         elif(board[1][col] == 0 and game.player == 2):
             board[1][col] = game.player;
             game.player = 1;
-        elif(board[0][col] == 0 and game.player == 1):
-            board[0][col] = game.player;
+        elif(board[1][col] == 0 and game.player == 1):
+            board[1][col] = game.player;
             game.player = 2;
         elif(board[0][col] == 0 and game.player == 2):
             board[0][col] = game.player;
             game.player = 1;
+        elif(board[0][col] == 0 and game.player == 1):
+            board[0][col] = game.player;
+            game.player = 2;
         if(checkWin(board)==1):
             game.winner = 1
         if(checkWin(board)==2):
             game.winner = 2
+        logging.info(board)
         logging.info(game.winner)
         game.board = json.dumps(board)
         game.put()

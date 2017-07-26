@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <title>{{ user.name }}</title>
-  <h1>{{ user.name }}'s Profile</h1>
+  <title id="prof_title">{{ user.email }}</title>
+  <link href="stylesheets/profile.css">
+  <h1>{{ user.email }}'s Profile</h1>
   Name: "name"   Image: [insert image]  <br>
   Birthday: "month", "day", "year"      <br>
   Email: current_user.email             <br>
   score: "win" / "loss"                 <br>
+
+
+  <a href = "/">
+      <button>Home</button>
+  </a>
+
 </html>

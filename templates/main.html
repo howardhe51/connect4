@@ -6,7 +6,7 @@
       <title>Game selection</title>
       <link href="stylesheets/main.css" rel="stylesheet">
       <h1 id="game_title">Connect 4</h1>
-        <form action="/select" method="post">
+        <form action="/game" method="post">
           <section class="select_mode">
               Gamemode:
               <select>
@@ -16,9 +16,9 @@
               <button>Submit</button>
           </section>
         </form>
-        <form action="/profile" method="post">
+        <a href = "/profile">
             <button>Profile</button>
-        </form>
+    </a>
       <a href="{{ logout_url }}"><button id="log_button2">Logout</button></a>
 
 

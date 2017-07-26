@@ -22,8 +22,7 @@ class Profile(ndb.Model):
 class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
-    iden = ndb.IntegerProperty()
-    user_key = ndb.KeyProperty(kind = Profile)
+
 
 class Game(ndb.Model):
     board = ndb.JsonProperty()
@@ -66,11 +65,24 @@ class SelectionHandler(webapp2.RequestHandler):
 
 class ProfileHandler(webapp2.RequestHandler):
     def get(self):
-
+        # Get the current user's email
+        current_user = users.get_current_user()
+        # Only query for User models that have the email of the current user
+        user_query = User.query().filter(User.email == current_user.email()).get()
+        self.response.write(user_query)
+        #user = user_query.get()
+        template_vars = {
+            "user": user_query
+        }
+        print "user is", user_query
         template = jinja_environment.get_template('templates/profile.html')
-        self.response.write(template.render())
+        self.response.write(template.render(template_vars))
 
     def post(self):
+        current_user = users.get_current_user()
+        user_email = current_user.email()
+        user = User(email=user_email, name = "howard")
+        user.put()
         self.redirect('/profile')
 
 
@@ -198,6 +210,6 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/select', SelectionHandler),
     ('/column', ColumnHandler),
-#('/profile', ProfileHandler),
+    ('/profile', ProfileHandler),
     ], debug=True)
 #helloworld

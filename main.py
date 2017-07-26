@@ -35,8 +35,8 @@ class Game(ndb.Model):
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
-        logout_url = users.create_logout_url('/')
         login_url = users.create_login_url('/')
+        logout_url = users.create_logout_url('/')
         template_vars = {
             'current_user': current_user,
             'logout_url': logout_url,

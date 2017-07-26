@@ -87,14 +87,6 @@ class ProfileHandler(webapp2.RequestHandler):
         self.redirect('/profile')
 
 class ColumnHandler(webapp2.RequestHandler):
-    '''def get(self):
-            games = Game.query().fetch()
-            template_vars = {
-                'games': games,
-            }
-
-            template = jinja_environment.get_template('templates/game.html')
-            self.response.write(template.render(template_vars))'''
     def post(self):
           col = int(self.request.get('column'))
           logging.info(col)
@@ -148,9 +140,6 @@ class ColumnHandler(webapp2.RequestHandler):
           game.put()
           template = jinja_environment.get_template('templates/game.html')
           self.response.write(game.board)
-
-
-
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

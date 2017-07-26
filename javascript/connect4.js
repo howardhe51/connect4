@@ -1,74 +1,36 @@
-var board = [ [0,0,0,0,0,0],
-              [0,0,0,0,0,0],
-              [0,0,0,0,0,0],
-              [0,0,0,0,0,0],
-              [0,0,0,0,0,0],
-              [0,0,0,0,0,0],
-              [0,0,0,0,0,0]];
 
-var player = 1;
 
 function clickColumn() {
   var button = $(this);
   var col = Number($(this).attr('id'));
   var urlsafeKey = $(button).val();
-  $.post('/column', {'column': col}, function(response) {
+  $.post('/column', {'column': col}, function(game) {
     // Update the number in the "like" element.
-    $(col).text(response);
-  });
-  /*if(board[col][5] == 0 && player == 1) {
-    board[col][5] = player;
-    player = 2;
-  }
-  else if(board[col][5] == 0 && player == 2) {
-    board[col][5] = player;
-    player = 1;
-  }
-  else if(board[col][4] == 0 && player == 1) {
-    board[col][4] = player;
-    player = 2;
-  }
-  else if(board[col][4] == 0 && player == 2) {
-    board[col][4] = player;
-    player = 1;
-  }
-  else if(board[col][3] == 0 && player == 1) {
-    board[col][3] = player;
-    player = 2;
-  }
-  else if(board[col][3] == 0 && player == 2) {
-    board[col][3] = player;
-    player = 1;
-  }
-  else if(board[col][2] == 0 && player == 1) {
-    board[col][2] = player;
-    player = 2;
-  }
-  else if(board[col][2] == 0 && player == 2) {
-    board[col][2] = player;
-    player = 1;
-  }
-  else if(board[col][1] == 0 && player == 1) {
-    board[col][1] = player;
-    player = 2;
-  }
-  else if(board[col][1] == 0 && player == 2) {
-    board[col][1] = player;
-    player = 1;
-  }
-  else if(board[col][0] == 0 && player == 1) {
-    board[col][0] = player;
-    player = 2;
-  }
-  else if(board[col][0] == 0 && player == 2) {
-    board[col][0] = player;
-    player = 1;
-  }
-  console.log(board);*/
+    console.log("Game", game)
+    $(col).text(game);
+        drawBoard(JSON.parse(game));
+  })}
 
+
+function clearBoard() {
+  for(i = 0; i< 7; i++) {
+    for(j = 0; j<6; j++) {
+      board[i][j]==0;
+    }
+  }
 }
 
-// Add a click event handler.
-// Use $.post to "call" the /selectionHandler with the column that the user clicked on
-// Use the result that the /selecdtionHandler gives back to update the board and see if there's a winner
+function drawBoard(game) {
+  for(i = 0; i< 7; i++) {
+    for(j = 0; j<6; j++) {
+      if(game[j][i]==1){
+        $("#square" + i + j).addClass('p1')
+      }
+      else if(game[j][i]==2){
+        $("#square" + i + j).addClass('p2')
+      }
+    }
+  }
+}
+
 $(".col").click(clickColumn);

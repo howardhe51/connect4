@@ -70,7 +70,6 @@ class ProfileHandler(webapp2.RequestHandler):
         current_user = users.get_current_user()
         # Only query for User models that have the email of the current user
         user_query = User.query().filter(User.email == current_user.email()).get()
-        self.response.write(user_query)
         #user = user_query.get()
         template_vars = {
             "user": user_query

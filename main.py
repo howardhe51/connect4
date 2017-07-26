@@ -93,16 +93,18 @@ def checkWin(board):
                 winner = checkEast(board,row,col)
                 if(winner!=0):
                     return winner
-                    if(row<=2):
-                        winner = checkSouthEast(board,row,col)
-                        if(winner!=0):
-                            return winner
+                if(row<=2):
+                    winner = checkSouthEast(board,row,col)
+                    if(winner!=0):
+                        return winner
             if(row<=2):
                 winner = checkSouth(board,row,col)
                 if(winner!=0):
                     return winner
-                    if(col>=3):
-                        checkSouthWest(board,row,col)
+                if(col>=3):
+                    winner = checkSouthWest(board,row,col)
+                    if(winner!=0):
+                        return winner
     return 0
 def checkEast(board, row, col):
     if(board[row][col] == 0):
@@ -113,6 +115,7 @@ def checkEast(board, row, col):
             count = count + 1
             if(count==3):
                 return board[row][col]
+    return 0
 def checkSouthEast(board, row, col):
     if(board[row][col] == 0):
         return 0;
@@ -122,6 +125,7 @@ def checkSouthEast(board, row, col):
             count = count + 1
             if(count==3):
                 return board[row][col]
+    return 0
 def checkSouth(board, row, col):
     if(board[row][col] == 0):
         return 0;
@@ -131,6 +135,7 @@ def checkSouth(board, row, col):
             count = count + 1
             if(count==3):
                 return board[row][col]
+    return 0
 def checkSouthWest(board, row, col):
     if(board[row][col] == 0):
         return 0;
@@ -140,13 +145,13 @@ def checkSouthWest(board, row, col):
             count = count + 1
             if(count==3):
                 return board[row][col]
+    return 0
 
 class ColumnHandler(webapp2.RequestHandler):
 
     def post(self):
         col = int(self.request.get('column'))
         game = Game.query().get()
-        logging.info("board is %s", game.board)
         board = json.loads(game.board)
 
         # === 2: Interact with the database. ===
@@ -183,18 +188,21 @@ class ColumnHandler(webapp2.RequestHandler):
         elif(board[1][col] == 0 and game.player == 2):
             board[1][col] = game.player;
             game.player = 1;
-        elif(board[0][col] == 0 and game.player == 1):
-            board[0][col] = game.player;
+        elif(board[1][col] == 0 and game.player == 1):
+            board[1][col] = game.player;
             game.player = 2;
         elif(board[0][col] == 0 and game.player == 2):
             board[0][col] = game.player;
             game.player = 1;
+        elif(board[0][col] == 0 and game.player == 1):
+            board[0][col] = game.player;
+            game.player = 2;
         if(checkWin(board)==1):
             game.winner = 1
         if(checkWin(board)==2):
             game.winner = 2
-        logging.info(game.winner)
         logging.info(board)
+        logging.info(game.winner)
         game.board = json.dumps(board)
         game.put()
         template = jinja_environment.get_template('templates/game.html')

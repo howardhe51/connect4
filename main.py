@@ -102,7 +102,9 @@ def checkWin(board):
                 if(winner!=0):
                     return winner
                     if(col>=3):
-                        checkSouthWest(board,row,col)
+                        winner = checkSouthWest(board,row,col)
+                        if(winner!=0):
+                            return winner
     return 0
 def checkEast(board, row, col):
     if(board[row][col] == 0):

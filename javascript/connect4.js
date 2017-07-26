@@ -20,13 +20,13 @@ function clearBoard() {
 }
 
 function drawBoard(game) {
-  for(i = 0; i< 7; i++) {
-    for(j = 0; j<6; j++) {
+  for(i = 0; i< 6; i++) {
+    for(j = 0; j<7; j++) {
       if(game[i][j]==1){
-        $("#square" + i + j).addClass('p1')
+        $("#square" + j + i).addClass('p1')
       }
       else if(game[i][j]==2){
-        $("#square" + i + j).addClass('p2')
+        $("#square" + j + i).addClass('p2')
       }
     }
   }

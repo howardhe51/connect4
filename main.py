@@ -27,6 +27,7 @@ class User(ndb.Model):
 class Game(ndb.Model):
     board = ndb.JsonProperty()
     player = ndb.IntegerProperty()
+    winner = ndb.IntegerProperty()
     # Might want to have a `winner` UserProperty
     # Keep track of user1 and user2
 
@@ -51,16 +52,16 @@ class SelectionHandler(webapp2.RequestHandler):
 
     def post(self):
         gamemode = self.request.get('dropbox')
-        board = [ [0,0,0,0,0,0],
-                  [0,0,0,0,0,0],
-                  [0,0,0,0,0,0],
-                  [0,0,0,0,0,0],
-                  [0,0,0,0,0,0],
-                  [0,0,0,0,0,0],
-                  [0,0,0,0,0,0]]
+        board = [ [0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0],
+                  [0,0,0,0,0,0,0]]
         player = 1
+        winner = 0
 
-        new_game = Game(board = json.dumps(board), player = player)
+        new_game = Game(board = json.dumps(board), player = player, winner = winner)
         new_game.put()
         self.redirect('/select')
 
@@ -85,60 +86,119 @@ class ProfileHandler(webapp2.RequestHandler):
         user.put()
         self.redirect('/profile')
 
+def checkWin(board):
+    for row in range(0,6):
+        for col in range(0,7):
+            if(col<=3):
+                winner = checkEast(board,row,col)
+                if(winner!=0):
+                    return winner
+                    if(row<=2):
+                        winner = checkSouthEast(board,row,col)
+                        if(winner!=0):
+                            return winner
+            if(row<=2):
+                winner = checkSouth(board,row,col)
+                if(winner!=0):
+                    return winner
+                    if(col>=3):
+                        checkSouthWest(board,row,col)
+    return 0
+def checkEast(board, row, col):
+    if(board[row][col] == 0):
+        return 0;
+    count = 0
+    for i in range(1,4):
+        if(board[row][col]==board[row][col+i]):
+            count = count + 1
+            if(count==3):
+                return board[row][col]
+def checkSouthEast(board, row, col):
+    if(board[row][col] == 0):
+        return 0;
+    count = 0
+    for i in range(1,4):
+        if(board[row][col]==board[row+i][col+i]):
+            count = count + 1
+            if(count==3):
+                return board[row][col]
+def checkSouth(board, row, col):
+    if(board[row][col] == 0):
+        return 0;
+    count = 0
+    for i in range(1,4):
+        if(board[row][col]==board[row+i][col]):
+            count = count + 1
+            if(count==3):
+                return board[row][col]
+def checkSouthWest(board, row, col):
+    if(board[row][col] == 0):
+        return 0;
+    count = 0
+    for i in range(1,4):
+        if(board[row][col]==board[row+i][col-i]):
+            count = count + 1
+            if(count==3):
+                return board[row][col]
+
 class ColumnHandler(webapp2.RequestHandler):
+
     def post(self):
-          col = int(self.request.get('column'))
-          logging.info(col)
-          game = Game.query().get()
-          logging.info("board is %s", game.board)
-          board = json.loads(game.board)
+        col = int(self.request.get('column'))
+        game = Game.query().get()
+        logging.info("board is %s", game.board)
+        board = json.loads(game.board)
 
         # === 2: Interact with the database. ===
 
         # Use the URLsafe key to get the photo from the DB.
-          if(board[col][5] == 0 and game.player == 1):
-                board[col][5] = game.player;
-                game.player = 2;
+        if(board[5][col] == 0 and game.player == 1):
+            board[5][col] = game.player;
+            game.player = 2;
 
-          elif(board[col][5] == 0 and game.player == 2):
-            board[col][5] = game.player;
+        elif(board[5][col] == 0 and game.player == 2):
+            board[5][col] = game.player;
             game.player = 1;
-          elif(board[col][4] == 0 and game.player == 1):
-            board[col][4] = game.player;
+        elif(board[4][col] == 0 and game.player == 1):
+            board[4][col] = game.player;
             game.player = 2;
-          elif(board[col][4] == 0 and game.player == 2):
-            board[col][4] = game.player;
+        elif(board[4][col] == 0 and game.player == 2):
+            board[4][col] = game.player;
             game.player = 1;
-          elif(board[col][3] == 0 and game.player == 1):
-            board[col][3] = game.player;
+        elif(board[3][col] == 0 and game.player == 1):
+            board[3][col] = game.player;
             game.player = 2;
-          elif(board[col][3] == 0 and game.player == 2):
-            board[col][3] = game.player;
+        elif(board[3][col] == 0 and game.player == 2):
+            board[3][col] = game.player;
             game.player = 1;
-          elif(board[col][2] == 0 and game.player == 1):
-            board[col][2] = game.player;
+        elif(board[3][col] == 0 and game.player == 1):
+            board[3][col] = game.player;
             game.player = 2;
-          elif(board[col][2] == 0 and game.player == 2):
-            board[col][2] = game.player;
+        elif(board[2][col] == 0 and game.player == 2):
+            board[2][col] = game.player;
             game.player = 1;
-          elif(board[col][1] == 0 and game.player == 1):
-            board[col][1] = game.player;
+        elif(board[2][col] == 0 and game.player == 1):
+            board[2][col] = game.player;
             game.player = 2;
-          elif(board[col][1] == 0 and game.player == 2):
-            board[col][1] = game.player;
+        elif(board[1][col] == 0 and game.player == 2):
+            board[1][col] = game.player;
             game.player = 1;
-          elif(board[col][0] == 0 and game.player == 1):
-            board[col][0] = game.player;
+        elif(board[0][col] == 0 and game.player == 1):
+            board[0][col] = game.player;
             game.player = 2;
-          elif(board[col][0] == 0 and game.player == 2):
-            board[col][0] = game.player;
+        elif(board[0][col] == 0 and game.player == 2):
+            board[0][col] = game.player;
             game.player = 1;
-          logging.info(board)
-          logging.info(game.player)
-          game.board = json.dumps(board)
-          game.put()
-          template = jinja_environment.get_template('templates/game.html')
-          self.response.write(game.board)
+        if(checkWin(board)==1):
+            game.winner = 1
+        if(checkWin(board)==2):
+            game.winner = 2
+        logging.info(game.winner)
+        logging.info(board)
+        game.board = json.dumps(board)
+        game.put()
+        template = jinja_environment.get_template('templates/game.html')
+        self.response.write(game.board)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

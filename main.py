@@ -59,7 +59,8 @@ class SelectionHandler(webapp2.RequestHandler):
                   [0,0,0,0,0,0],
                   [0,0,0,0,0,0]]
         player = 1
-        new_game = Game(board = board, player = player)
+
+        new_game = Game(board = json.dumps(board), player = player)
         new_game.put()
         self.redirect('/select')
 
@@ -86,23 +87,6 @@ class ProfileHandler(webapp2.RequestHandler):
         self.redirect('/profile')
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class NewGameHandler(webapp2.RequestHandler):
     def get(self):
         board = [ [0,0,0,0,0,0],
@@ -120,12 +104,6 @@ class NewGameHandler(webapp2.RequestHandler):
 
 
 
-
-
-
-
-
-
 class ColumnHandler(webapp2.RequestHandler):
     '''def get(self):
             games = Game.query().fetch()
@@ -139,6 +117,7 @@ class ColumnHandler(webapp2.RequestHandler):
           col = int(self.request.get('column'))
           logging.info(col)
           game = Game.query().get()
+          logging.info("board is %s", game.board)
           board = json.loads(game.board)
 
         # === 2: Interact with the database. ===
@@ -186,22 +165,7 @@ class ColumnHandler(webapp2.RequestHandler):
           game.board = json.dumps(board)
           game.put()
           template = jinja_environment.get_template('templates/game.html')
-          self.response.write(template.render())
-
-
-
-
-
-
-
-
-
-#class MoveHandler(webapp2.RequestHandler):
-    #def get(self):
-
-
-
-
+          self.response.write(game.board)
 
 
 

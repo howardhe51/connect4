@@ -19,9 +19,11 @@ class Profile(ndb.Model):
     win = ndb.IntegerProperty()
     lose = ndb.IntegerProperty()
 
+
 class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
+    image = ndb.StringProperty()
 
 
 class Game(ndb.Model):
@@ -79,11 +81,18 @@ class ProfileHandler(webapp2.RequestHandler):
         self.response.write(template.render(template_vars))
 
     def post(self):
+        image = self.request.get('filename')
+        # image is a "unicode" type, but we want it to be a string
+        image = str(image)
         current_user = users.get_current_user()
         user_email = current_user.email()
-        user = User(email=user_email)
+        user = User(email=user_email, image = image)
         user.put()
         self.redirect('/profile')
+
+
+
+
 
 class ColumnHandler(webapp2.RequestHandler):
     def post(self):

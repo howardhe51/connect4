@@ -89,7 +89,6 @@ class ProfileHandler(webapp2.RequestHandler):
         #user = user_query.get()
         template_vars = {
             "user": user,
-            "img_link": user.image
         }
         print "user is", user
         template = jinja_environment.get_template('templates/profile.html')
@@ -99,7 +98,6 @@ class ProfileHandler(webapp2.RequestHandler):
         image = self.request.get('img_link')
         # image is a "unicode" type, but we want it to be a string
         #image = str(image)
-        print "the link is ", image
         current_user = users.get_current_user()
         user_email = current_user.email()
         user = User.query().filter(User.email == current_user.email()).get()

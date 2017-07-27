@@ -178,6 +178,9 @@ def checkSouthWest(board, row, col):
     return 0
 
 class ColumnHandler(webapp2.RequestHandler):
+    def get(self):
+        game = Game.query().get()
+        self.response.write(game.board)
     def post(self):
         col = int(self.request.get('column'))
         game = Game.query().get()
@@ -220,9 +223,9 @@ class ColumnHandler(webapp2.RequestHandler):
                     board[0][col] = 2
                 game.current_player = game.player1
         if(checkWin(board)==1):
-            game.winner = 1
+            game.winner = game.player1
         if(checkWin(board)==2):
-            game.winner = 2
+            game.winner = game.player2
         logging.info(board)
         logging.info(game.winner)
         game.board = json.dumps(board)

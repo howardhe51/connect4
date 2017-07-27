@@ -75,7 +75,7 @@ class GameHandler(webapp2.RequestHandler):
         current_user = users.get_current_user()
         if(game== None):
             game = Game(board = json.dumps(board),player1 = current_user.user_id())
-        elif(game.player2=="null"):
+        elif(game.player2==None):
             game.player2 == current_user.user_id()
         game.put()
         self.redirect('/game')
@@ -177,6 +177,8 @@ class ColumnHandler(webapp2.RequestHandler):
 
         # Use the URLsafe key to get the photo from the DB.
         var = 0
+        logging.info("Player 1 : %s", game.player1)
+        logging.info("Player 2 : %s", game.player2)
         if(game.current_player == game.player1):
             var = 1
         elif(game.current_player == game.player2):

@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
-<!-- <script src= "profile.js"></script> -->
+ <!-- <script src= "profile.js"></script>  -->
 <!-- <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet"> -->
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
 <!-- <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script> -->
   <!-- <title>{{ user.email }}</title> -->
 
 <link href="stylesheets/profile.css" rel="stylesheet">
-
 <title id="prof_title">{{ user.email }}</title>
   <h1>{{ user.email }}'s Profile</h1>
 
-  Image: <img src="https://www.google.com/s2/photos/profile/{img_link}">  <br>
+   Image: <img src="https://www.google.com/s2/photos/profile/{img_link}">  <br>
   <form action="/profile" method="post">
     <!-- This will only get the filename. Try using the jQuery file upload plugin.
       https://plugins.jquery.com/uploadfile/
@@ -26,6 +25,5 @@
   <a href = "/">
     <button id="home">Home</button>
   </a>
-
-<IMG SRC="jb.gif">
+  <img id ="jb" src="images/jb.gif">
 </html>

@@ -23,12 +23,8 @@ class Profile(ndb.Model):
 class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
-<<<<<<< HEAD
-    user_key = ndb.StringProperty()
-=======
     image = ndb.StringProperty()
->>>>>>> 6774310b8895130b16d03d2c5faa60fb471fb9be
-
+    user_key = ndb.StringProperty()
 
 class Game(ndb.Model):
     # TODO: Game will also need a key

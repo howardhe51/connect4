@@ -1,5 +1,3 @@
-
-
 function clickColumn() {
   var button = $(this);
   var col = Number($(this).attr('id'));
@@ -33,10 +31,15 @@ function drawBoard(game) {
 }
 
 $(".col").click(clickColumn);
-refresh();
+setInterval(refresh,100);
 function refresh() {
     // make Ajax call here, inside the callback call:
-    drawBoard(JSON.parse(game));
-    setTimeout(refresh, 1000);
+    console.log("I am in the refresh")
+    $.get('/column', function(game) {
+      // Update the number in the "like" element.
+      console.log("Game", game)
+      //$(col).text(game);
+      drawBoard(JSON.parse(game));
+    })
     // ...
 }

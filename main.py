@@ -90,7 +90,6 @@ class ProfileHandler(webapp2.RequestHandler):
         template_vars = {
             "user": user
         }
-        print "user is", user
         template = jinja_environment.get_template('templates/profile.html')
         self.response.write(template.render(template_vars))
 
@@ -98,7 +97,6 @@ class ProfileHandler(webapp2.RequestHandler):
         image = self.request.get('img_link')
         # image is a "unicode" type, but we want it to be a string
         #image = str(image)
-        print "the link is ", image
         current_user = users.get_current_user()
         user_email = current_user.email()
         user = User.query().filter(User.email == current_user.email()).get()
@@ -177,6 +175,9 @@ def checkSouthWest(board, row, col):
     return 0
 
 class ColumnHandler(webapp2.RequestHandler):
+    def get(self):
+        game = Game.query().get()
+        self.response.write(game.board)
     def post(self):
         col = int(self.request.get('column'))
         game = Game.query().get()
@@ -219,9 +220,9 @@ class ColumnHandler(webapp2.RequestHandler):
                     board[0][col] = 2
                 game.current_player = game.player1
         if(checkWin(board)==1):
-            game.winner = 1
+            game.winner = game.player1
         if(checkWin(board)==2):
-            game.winner = 2
+            game.winner = game.player2
         logging.info(board)
         logging.info(game.winner)
         game.board = json.dumps(board)
@@ -235,4 +236,3 @@ app = webapp2.WSGIApplication([
     ('/column', ColumnHandler),
     ('/profile', ProfileHandler),
     ], debug=True)
-#helloworld

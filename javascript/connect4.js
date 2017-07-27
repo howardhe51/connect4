@@ -33,3 +33,10 @@ function drawBoard(game) {
 }
 
 $(".col").click(clickColumn);
+refresh();
+function refresh() {
+    // make Ajax call here, inside the callback call:
+    drawBoard(JSON.parse(game));
+    setTimeout(refresh, 1000);
+    // ...
+}

@@ -25,19 +25,19 @@ h1  {
 	 100% { -webkit-transform: translateX(-50%); }
 	}
 
-	#home{
+#home {
 		line-height: 30px;
-     width: 200px;
-     font-size: 25pt;
-     font-family: Arial Black;
-     margin-top: 100px;
-     margin-right: 2px;
-     position:absolute;
-     top:0;
-     right:0;
-
+    width: 200px;
+    font-size: 25pt;
+    font-family: Arial Black;
+    margin-top: 100px;
+    margin-right: 2px;
+    position:absolute;
+    top:0;
+    right:0;
 		background-color: blue;
     border: none;
+    border-radius: 30px;
     color: white;
     padding: 15px 32px;
     text-align: center;
@@ -49,7 +49,7 @@ h1  {
 		border-width: 6px;
 
   }
-	body {
+body {
   background: radial-gradient(circle, blue, red);
 }
 

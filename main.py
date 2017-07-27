@@ -106,6 +106,7 @@ def checkWin(board):
                     if(winner!=0):
                         return winner
     return 0
+
 def checkEast(board, row, col):
     if(board[row][col] == 0):
         return 0;

@@ -1,11 +1,11 @@
 function clickColumn() {
   var button = $(this);
   var col = Number($(this).attr('id'));
-  $.post('/column', {'column': col}, function(game) {
+  $.post('/column', {'column': col}, function(game_json) {
     // Update the number in the "like" element.
-    console.log("Game", game)
-    $(col).text(game);
-        drawBoard(JSON.parse(game));
+    game = JSON.parse(game_json)
+    console.log("Game", game.board)
+    drawBoard(game.board);
   })}
 
 
@@ -18,28 +18,34 @@ function clearBoard() {
 }
 
 function drawBoard(game) {
+  console.log(game)
   for(i = 0; i< 6; i++) {
     for(j = 0; j<7; j++) {
       if(game[i][j]==1){
-        $("#square" + j + i).addClass('p1')
+        console.log("I am in 1st if statement")
+        $("#square" + j + i).addClass('p1');
       }
       else if(game[i][j]==2){
-        $("#square" + j + i).addClass('p2')
+        $("#square" + j + i).addClass('p2');
       }
     }
   }
 }
 
 $(".col").click(clickColumn);
-setInterval(refresh,100);
+setInterval(refresh,1000);
 function refresh() {
     // make Ajax call here, inside the callback call:
-    console.log("I am in the refresh")
-    $.get('/column', function(game) {
+    $.get('/column', function(game_json) {
+      if(game.winner!=null){
+        alert(game.winner);
+      }
+      game = JSON.parse(game_json)
+      console.log("Board" , game.board);
       // Update the number in the "like" element.
-      console.log("Game", game)
+      //console.log("Game", game)
       //$(col).text(game);
-      drawBoard(JSON.parse(game));
+      drawBoard(game.board);
     })
     // ...
 }

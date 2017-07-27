@@ -8,10 +8,12 @@
 
 <link href="stylesheets/profile.css" rel="stylesheet">
 <title id="prof_title">{{ user.email }}</title>
+  <div id="h1_banner">
+  </div>
   <h1>{{ user.email }}'s Profile</h1>
 
-   <!-- Image: <img src="https://www.google.com/s2/photos/profile/{img_link}">  <br> -->
-  <form action="/profile" method="post">
+   Image: <img id="img_upl" src="https://www.google.com/s2/photos/profile/{img_link}">  <br>
+  <form id="img_upl" action="/profile" method="post">
     <!-- This will only get the filename. Try using the jQuery file upload plugin.
       https://plugins.jquery.com/uploadfile/
    -->

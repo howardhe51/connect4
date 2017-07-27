@@ -72,6 +72,7 @@ class GameHandler(webapp2.RequestHandler):
         player = 1
         winner = 0
         game = Game.query().get()
+        current_user = users.get_current_user()
         if(game== None):
             game = Game(board = json.dumps(board),player1 = current_user.user_id())
         elif(game.player2==None):

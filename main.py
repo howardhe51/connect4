@@ -23,7 +23,7 @@ class Profile(ndb.Model):
 class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
-    image = ndb.StringProperty()
+    image = ndb.BlobProperty()
     user_key = ndb.StringProperty()
 
 class Game(ndb.Model):
@@ -96,7 +96,7 @@ class ProfileHandler(webapp2.RequestHandler):
     def post(self):
         image = self.request.get('img_link')
         # image is a "unicode" type, but we want it to be a string
-        #image = str(image)
+        image = str(image)
         current_user = users.get_current_user()
         user_email = current_user.email()
         user = User.query().filter(User.email == current_user.email()).get()

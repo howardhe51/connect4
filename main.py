@@ -176,6 +176,9 @@ def checkSouthWest(board, row, col):
     return 0
 
 class ColumnHandler(webapp2.RequestHandler):
+    def get(self):
+        game = Game.query().get()
+        self.response.write(game.board)
     def post(self):
         col = int(self.request.get('column'))
         game = Game.query().get()
@@ -187,52 +190,40 @@ class ColumnHandler(webapp2.RequestHandler):
         var = 0
         logging.info("Player 1 : %s", game.player1)
         logging.info("Player 2 : %s", game.player2)
-        if(game.current_player == game.player1):
-            var = 1
-        elif(game.current_player == game.player2):
-            var = 2
-        if(game.player1 == game.current_player):
-            if(board[5][col] == 0):
-                board[5][col] = 1
+        if(game.player1 == users.get_current_user().user_id()):
+            if(game.player1 == game.current_player):
+                if(board[5][col] == 0):
+                    board[5][col] = 1
+                elif(board[4][col] == 0):
+                    board[4][col] = 1
+                elif(board[3][col] == 0):
+                    board[3][col] = 1
+                elif(board[2][col] == 0):
+                    board[2][col] = 1
+                elif(board[1][col] == 0):
+                    board[1][col] = 1
+                elif(board[0][col] == 0):
+                    board[0][col] = 1
                 game.current_player = game.player2
-            elif(board[4][col] == 0):
-                board[4][col] == 1
-                game.current_player = game.player2
-            elif(board[3][col] == 0):
-                board[3][col] == 1
-                game.current_player = game.player2
-            elif(board[2][col] == 0):
-                board[2][col] == 1
-                game.current_player = game.player2
-            elif(board[1][col] == 0):
-                board[1][col] == 1
-                game.current_player = game.player2
-            elif(board[0][col] == 0):
-                board[0][col] == 1
-                game.current_player = game.player2
-        elif(game.player2 == game.current_player):
-            if(board[5][col] == 0):
-                board[5][col] = 2
-                game.current_player = game.player1
-            elif(board[4][col] == 0):
-                board[4][col] == 2
-                game.current_player = game.player1
-            elif(board[3][col] == 0):
-                board[3][col] == 2
-                game.current_player = game.player1
-            elif(board[2][col] == 0):
-                board[2][col] == 2
-                game.current_player = game.player1
-            elif(board[1][col] == 0):
-                board[1][col] == 2
-                game.current_player = game.player1
-            elif(board[0][col] == 0):
-                board[0][col] == 2
+        elif(game.player2 == users.get_current_user().user_id()):
+            if(game.player2 == game.current_player):
+                if(board[5][col] == 0):
+                    board[5][col] = 2
+                elif(board[4][col] == 0):
+                    board[4][col] = 2
+                elif(board[3][col] == 0):
+                    board[3][col] = 2
+                elif(board[2][col] == 0):
+                    board[2][col] = 2
+                elif(board[1][col] == 0):
+                    board[1][col] = 2
+                elif(board[0][col] == 0):
+                    board[0][col] = 2
                 game.current_player = game.player1
         if(checkWin(board)==1):
-            game.winner = 1
+            game.winner = game.player1
         if(checkWin(board)==2):
-            game.winner = 2
+            game.winner = game.player2
         logging.info(board)
         logging.info(game.winner)
         game.board = json.dumps(board)

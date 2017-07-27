@@ -33,3 +33,15 @@ function drawBoard(game) {
 }
 
 $(".col").click(clickColumn);
+setInterval(refresh,1000);
+function refresh() {
+    // make Ajax call here, inside the callback call:
+    console.log("I am in the refresh")
+    $.get('/column', function(game) {
+      // Update the number in the "like" element.
+      console.log("Game", game)
+      //$(col).text(game);
+      drawBoard(JSON.parse(game));
+    })
+    // ...
+}

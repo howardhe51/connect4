@@ -1,10 +1,13 @@
 body {
-  background: #e6e6fa
-  /*#background: #466368;*/
-  /*background: radial-gradient(#648880, #293f50);*/
+ background: radial-gradient(circle, blue, red);
 }
 
 h1 {
+font-size: 50px;
+color: white;
+border-radius: 25px;
+border-color: black;
+font-family: arial black;
  width: 100%;
  height: 100%;
  margin: 0;
@@ -28,10 +31,11 @@ h1 {
 
 #game_title {
   font-size: 50px;
+  color: white;
   text-align: center;
   border-radius: 25px;
   border-color: black;
-  text-shadow: 230px 0px;
+  text-shadow: 4px 4px #a8a8a8;
 }
 
 #log_button {
@@ -54,7 +58,10 @@ h1 {
   background-color: black;
   color: white;
   position: relative;
-  left: 90%;
+  margin-top: 5%;
+  left: 75%;
+  width: 115px;
+  height: 65px;
   border-radius: 30px;
   border-color: blue;
   box-shadow: 0;
@@ -64,8 +71,72 @@ h1 {
 }
 
 .select_mode {
-   margin-top: 80px;
+   margin-top: 13%;
    font-size: 20px;
    position: fixed;
-   left: 40%;
+   left: 45%;
  }
+
+p {
+  font-family: arial black;
+  color: black;
+  margin: 0
+}
+
+#profileb {
+  line-height: 30px;
+  width: 124px;
+  font-size: 20pt;
+  font-family: Arial Black;
+  margin-top: 60px;
+  margin-left: 20%;
+  position:absolute;
+  top:4;
+  right:50;
+  background-color: blue;
+  border: black;
+  border: magenta;
+  border-style: double;
+  border-width: 6px;
+  border-radius: 30px;
+  color: white;
+  padding: 12px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 23px;
+
+}
+
+ #subb{
+  line-height: 30px;
+  width: 124px;
+  font-size: 20pt;
+  font-family: Arial Black;
+  margin-top: 60px;
+  margin-right: 0px;
+  position: absolute;
+  top: 0;
+  left: 4;
+  background-color: blue;
+  border: black;
+  border: #00ffff;
+  border-style: double;
+  border-width: 6px;
+  border-radius: 30px;
+  color: white;
+  padding: 12px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 23px;
+}
+
+#h1_banner {
+  background: black;
+  width: 100%;
+  height: 80px;
+  top: 0;
+  left: 0;
+  position: absolute;
+}

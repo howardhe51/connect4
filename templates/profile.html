@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <title id="prof_title">{{ user.email }}</title>
-  <link href="stylesheets/profile.css">
+ <!-- <script src= "profile.js"></script>  -->
+<!-- <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet"> -->
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<!-- <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script> -->
+  <!-- <title>{{ user.email }}</title> -->
+
+<link href="stylesheets/profile.css" rel="stylesheet">
+<title id="prof_title">{{ user.email }}</title>
   <h1>{{ user.email }}'s Profile</h1>
-  Name: "name"   Image: [insert image]  <br>
-  Birthday: "month", "day", "year"      <br>
-  Email: current_user.email             <br>
-  score: "win" / "loss"                 <br>
 
+   Image: <img src="https://www.google.com/s2/photos/profile/{img_link}">  <br>
+  <form action="/profile" method="post">
+    <!-- This will only get the filename. Try using the jQuery file upload plugin.
+      https://plugins.jquery.com/uploadfile/
+   -->
+      <input type="url" name="img_link">
+    <!-- <input id= "img" type="url" name="filename" accept="image/gif, image/jpeg, image/png, image/png, image/jpg"> -->
+    <!-- Add JavaScript to select this element and call the uploadFile jQuery method,
+         passing in the filename that the input above has -->
 
+    <button id="upload" >Upload</button>
+  </form/>
   <a href = "/">
-      <button>Home</button>
+    <button id="home">Home</button>
   </a>
-
+  <img id ="jb" src="images/jb.gif">
 </html>

@@ -19,10 +19,15 @@ class Profile(ndb.Model):
     win = ndb.IntegerProperty()
     lose = ndb.IntegerProperty()
 
+
 class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
+<<<<<<< HEAD
     user_key = ndb.StringProperty()
+=======
+    image = ndb.StringProperty()
+>>>>>>> 6774310b8895130b16d03d2c5faa60fb471fb9be
 
 
 class Game(ndb.Model):
@@ -93,9 +98,13 @@ class ProfileHandler(webapp2.RequestHandler):
         self.response.write(template.render(template_vars))
 
     def post(self):
+        image = self.request.get('img_link')
+        # image is a "unicode" type, but we want it to be a string
+        #image = str(image)
+        print "the link is ", image
         current_user = users.get_current_user()
         user_email = current_user.email()
-        user = User(email=user_email)
+        user = User(email=user_email, image = image)
         user.put()
         self.redirect('/profile')
 
@@ -119,6 +128,7 @@ def checkWin(board):
                     if(winner!=0):
                         return winner
     return 0
+
 def checkEast(board, row, col):
     if(board[row][col] == 0):
         return 0;

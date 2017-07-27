@@ -11,16 +11,16 @@
   </div>
   <h1>{{ user.email }}'s Profile</h1>
 
-   Image: <img id="img_upl" src="{{user.image}}">  <br>
+   <img id="img_upl" src="{{user.image}}" width = "25%" height = "100%">  <br>
   <form id="img_upl" action="/profile" method="post">
     <!-- This will only get the filename. Try using the jQuery file upload plugin.
       https://plugins.jquery.com/uploadfile/
    -->
+  <b> Update your profile picture here: </b>
     <input type="url" name="img_link">
     <!-- <input id= "img" type="file" name="filename" accept="image/gif, image/jpeg, image/png, image/png, image/jpg"> -->
     <!-- Add JavaScript to select this element and call the uploadFile jQuery method,
          passing in the filename that the input above has -->
-
     <button id="upload" >Upload</button>
   </form/>
   <a href = "/">

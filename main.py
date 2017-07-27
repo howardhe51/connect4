@@ -23,7 +23,7 @@ class Profile(ndb.Model):
 class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
-    image = ndb.StringProperty()
+    image = ndb.JsonProperty()
     user_key = ndb.StringProperty()
 
 class Game(ndb.Model):

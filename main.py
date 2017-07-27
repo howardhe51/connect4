@@ -202,7 +202,7 @@ class ColumnHandler(webapp2.RequestHandler):
             elif(board[0][col] == 0):
                 board[0][col] == 1
                 game.current_player = game.player2
-        if(game.player2 == game.current_player):
+        elif(game.player2 == game.current_player):
             if(board[5][col] == 0):
                 board[5][col] = 2
                 game.current_player = game.player1

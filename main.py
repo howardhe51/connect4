@@ -180,18 +180,12 @@ def checkSouthWest(board, row, col):
 class ColumnHandler(webapp2.RequestHandler):
     def get(self):
         game = Game.query().get()
-        self.response.write(game.board)
+        board = json.loads(game.board)
+        self.response.write(json.dumps({'board':board, 'winner':game.winner}))
     def post(self):
         col = int(self.request.get('column'))
         game = Game.query().get()
         board = json.loads(game.board)
-
-        # === 2: Interact with the database. ===
-
-        # Use the URLsafe key to get the photo from the DB.
-        var = 0
-        logging.info("Player 1 : %s", game.player1)
-        logging.info("Player 2 : %s", game.player2)
         if(game.player1 == users.get_current_user().user_id()):
             if(game.player1 == game.current_player):
                 if(board[5][col] == 0):
@@ -231,7 +225,7 @@ class ColumnHandler(webapp2.RequestHandler):
         game.board = json.dumps(board)
         game.put()
         template = jinja_environment.get_template('templates/game.html')
-        self.response.write(game.board)
+        self.response.write(json.dumps({'board':board, 'winner':game.winner}))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

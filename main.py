@@ -75,7 +75,7 @@ class GameHandler(webapp2.RequestHandler):
         current_user = users.get_current_user()
         if(game== None):
             game = Game(board = json.dumps(board),player1 = current_user.user_id())
-        elif(game.player2==None):
+        elif(game.player2==null):
             game.player2 == current_user.user_id()
         game.put()
         self.redirect('/game')

@@ -33,7 +33,7 @@ class Game(ndb.Model):
     player2 = ndb.StringProperty()
     current_player = ndb.StringProperty()
     winner = ndb.StringProperty()
-    game_key = ndb.Keyproperty()
+    game_key = ndb.KeyProperty()
     # Might want to have a `winner` UserProperty
     # Keep track of user1 and user2
 

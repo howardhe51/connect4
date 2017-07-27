@@ -85,12 +85,13 @@ class ProfileHandler(webapp2.RequestHandler):
         # Get the current user's email
         current_user = users.get_current_user()
         # Only query for User models that have the email of the current user
-        user_query = User.query().filter(User.email == current_user.email()).get()
+        user = User.query().filter(User.email == current_user.email()).get()
         #user = user_query.get()
         template_vars = {
-            "user": user_query
+            "user": user,
+            "img_link": user.image
         }
-        print "user is", user_query
+        print "user is", user
         template = jinja_environment.get_template('templates/profile.html')
         self.response.write(template.render(template_vars))
 
@@ -101,9 +102,18 @@ class ProfileHandler(webapp2.RequestHandler):
         print "the link is ", image
         current_user = users.get_current_user()
         user_email = current_user.email()
-        user = User(email=user_email, image = image)
+        user = User.query().filter(User.email == current_user.email()).get()
+        if not user:
+            user = User(email=user_email)
+        user.image = image
         user.put()
-        self.redirect('/profile')
+        template_vars = {
+            "img_link": image,
+            "user": user
+        }
+        template = jinja_environment.get_template('templates/profile.html')
+        self.response.write(template.render(template_vars))
+        #self.redirect('/profile')
 
 def checkWin(board):
     for row in range(0,6):

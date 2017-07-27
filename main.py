@@ -72,10 +72,11 @@ class GameHandler(webapp2.RequestHandler):
         player = 1
         winner = 0
         game = Game.query().get()
+        current_user = users.get_current_user()
         if(game== None):
-            game = Game(board = json.dumps(board),player1 = current_user.user_id())
+            game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id())
         elif(game.player2==None):
-            game.player2 == current_user.user_id()
+            game.player2 = current_user.user_id()
         game.put()
         self.redirect('/game')
 
@@ -84,12 +85,13 @@ class ProfileHandler(webapp2.RequestHandler):
         # Get the current user's email
         current_user = users.get_current_user()
         # Only query for User models that have the email of the current user
-        user_query = User.query().filter(User.email == current_user.email()).get()
+        user = User.query().filter(User.email == current_user.email()).get()
         #user = user_query.get()
         template_vars = {
-            "user": user_query
+            "user": user,
+            "img_link": user.image
         }
-        print "user is", user_query
+        print "user is", user
         template = jinja_environment.get_template('templates/profile.html')
         self.response.write(template.render(template_vars))
 
@@ -100,9 +102,18 @@ class ProfileHandler(webapp2.RequestHandler):
         print "the link is ", image
         current_user = users.get_current_user()
         user_email = current_user.email()
-        user = User(email=user_email, image = image)
+        user = User.query().filter(User.email == current_user.email()).get()
+        if not user:
+            user = User(email=user_email)
+        user.image = image
         user.put()
-        self.redirect('/profile')
+        template_vars = {
+            "img_link": image,
+            "user": user
+        }
+        template = jinja_environment.get_template('templates/profile.html')
+        self.response.write(template.render(template_vars))
+        #self.redirect('/profile')
 
 def checkWin(board):
     for row in range(0,6):
@@ -176,47 +187,38 @@ class ColumnHandler(webapp2.RequestHandler):
 
         # Use the URLsafe key to get the photo from the DB.
         var = 0
-        if(game.current_player == game.player1):
-            var = 1
-        elif(game.current_player == game.player2):
-            var = 2
-        if(board[5][col] == 0 and game.player1 == game.current_player):
-            board[5][col] = 1;
-            game.current_player = game.player2
-
-        elif(board[5][col] == 0 and game.player2 == game.current_player):
-            board[5][col] = 2;
-            game.current_player = game.player1
-        elif(board[4][col] == 0 and game.player1 == game.current_player):
-            board[4][col] = 1;
-            game.current_player = game.player2
-        elif(board[4][col] == 0 and game.player2 == game.current_player):
-            board[4][col] = 2;
-            game.current_player = game.player1
-        elif(board[3][col] == 0 and game.player1 == game.current_player):
-            board[3][col] = 1;
-            game.current_player = game.player2
-        elif(board[3][col] == 0 and game.player2 == game.current_player):
-            board[3][col] = 2;
-            game.current_player = game.player1
-        elif(board[2][col] == 0 and game.player1 == game.current_player):
-            board[2][col] = 1;
-            game.current_player = game.player2
-        elif(board[2][col] == 0 and game.player2 == game.current_player):
-            board[2][col] = 2;
-            game.current_player = game.player1
-        elif(board[1][col] == 0 and game.player1 == game.current_player):
-            board[1][col] = 1;
-            game.current_player = game.player2
-        elif(board[1][col] == 0 and game.player2 == game.current_player):
-            board[1][col] = 2;
-            game.current_player = game.player1
-        elif(board[0][col] == 0 and game.player1 == game.current_player):
-            board[0][col] = 1;
-            game.current_player = game.player2
-        elif(board[0][col] == 0 and game.player2 == game.current_player):
-            board[0][col] = 2;
-            game.current_player = game.player1
+        logging.info("Player 1 : %s", game.player1)
+        logging.info("Player 2 : %s", game.player2)
+        if(game.player1 == users.get_current_user().user_id()):
+            if(game.player1 == game.current_player):
+                if(board[5][col] == 0):
+                    board[5][col] = 1
+                elif(board[4][col] == 0):
+                    board[4][col] = 1
+                elif(board[3][col] == 0):
+                    board[3][col] = 1
+                elif(board[2][col] == 0):
+                    board[2][col] = 1
+                elif(board[1][col] == 0):
+                    board[1][col] = 1
+                elif(board[0][col] == 0):
+                    board[0][col] = 1
+                game.current_player = game.player2
+        elif(game.player2 == users.get_current_user().user_id()):
+            if(game.player2 == game.current_player):
+                if(board[5][col] == 0):
+                    board[5][col] = 2
+                elif(board[4][col] == 0):
+                    board[4][col] = 2
+                elif(board[3][col] == 0):
+                    board[3][col] = 2
+                elif(board[2][col] == 0):
+                    board[2][col] = 2
+                elif(board[1][col] == 0):
+                    board[1][col] = 2
+                elif(board[0][col] == 0):
+                    board[0][col] = 2
+                game.current_player = game.player1
         if(checkWin(board)==1):
             game.winner = 1
         if(checkWin(board)==2):

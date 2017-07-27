@@ -88,8 +88,7 @@ class ProfileHandler(webapp2.RequestHandler):
         user = User.query().filter(User.email == current_user.email()).get()
         #user = user_query.get()
         template_vars = {
-            "user": user,
-            "img_link": user.image
+            "user": user
         }
         print "user is", user
         template = jinja_environment.get_template('templates/profile.html')

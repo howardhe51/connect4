@@ -22,12 +22,16 @@ class Profile(ndb.Model):
 class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
+    user_key = ndb.StringProperty()
 
 
 class Game(ndb.Model):
+    # TODO: Game will also need a key
     board = ndb.JsonProperty()
-    player = ndb.IntegerProperty()
-    winner = ndb.IntegerProperty()
+    player1 = ndb.StringProperty()
+    player2 = ndb.StringProperty()
+    current_player = ndb.StringProperty()
+    winner = ndb.StringProperty()
     # Might want to have a `winner` UserProperty
     # Keep track of user1 and user2
 
@@ -35,6 +39,12 @@ class Game(ndb.Model):
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         current_user = users.get_current_user()
+        if (current_user == None):
+            current_user_id = 'none'
+        else:
+            current_user_id = current_user.user_id()
+        userID = current_user_id
+        user = User(user_key = userID)
         login_url = users.create_login_url('/')
         logout_url = users.create_logout_url('/')
         template_vars = {
@@ -60,9 +70,12 @@ class GameHandler(webapp2.RequestHandler):
                   [0,0,0,0,0,0,0]]
         player = 1
         winner = 0
-
-        new_game = Game(board = json.dumps(board), player = player, winner = winner)
-        new_game.put()
+        game = Game.query().get()
+        if(game== None):
+            game = Game(board = json.dumps(board),player1 = current_user.user_id())
+        elif(game.player2==None):
+            game.player2 == current_user.user_id()
+        game.put()
         self.redirect('/game')
 
 class ProfileHandler(webapp2.RequestHandler):
@@ -148,7 +161,6 @@ def checkSouthWest(board, row, col):
     return 0
 
 class ColumnHandler(webapp2.RequestHandler):
-
     def post(self):
         col = int(self.request.get('column'))
         game = Game.query().get()
@@ -157,46 +169,48 @@ class ColumnHandler(webapp2.RequestHandler):
         # === 2: Interact with the database. ===
 
         # Use the URLsafe key to get the photo from the DB.
-        if(board[5][col] == 0 and game.player == 1):
-            board[5][col] = game.player;
-            game.player = 2;
+        var = 0
+        if(game.current_player == game.player1):
+            var = 1
+        elif(game.current_player == game.player2):
+            var = 2
+        if(board[5][col] == 0 and game.player1 == game.current_player):
+            board[5][col] = 1;
+            game.current_player = game.player2
 
-        elif(board[5][col] == 0 and game.player == 2):
-            board[5][col] = game.player;
-            game.player = 1;
-        elif(board[4][col] == 0 and game.player == 1):
-            board[4][col] = game.player;
-            game.player = 2;
-        elif(board[4][col] == 0 and game.player == 2):
-            board[4][col] = game.player;
-            game.player = 1;
-        elif(board[3][col] == 0 and game.player == 1):
-            board[3][col] = game.player;
-            game.player = 2;
-        elif(board[3][col] == 0 and game.player == 2):
-            board[3][col] = game.player;
-            game.player = 1;
-        elif(board[3][col] == 0 and game.player == 1):
-            board[3][col] = game.player;
-            game.player = 2;
-        elif(board[2][col] == 0 and game.player == 2):
-            board[2][col] = game.player;
-            game.player = 1;
-        elif(board[2][col] == 0 and game.player == 1):
-            board[2][col] = game.player;
-            game.player = 2;
-        elif(board[1][col] == 0 and game.player == 2):
-            board[1][col] = game.player;
-            game.player = 1;
-        elif(board[1][col] == 0 and game.player == 1):
-            board[1][col] = game.player;
-            game.player = 2;
-        elif(board[0][col] == 0 and game.player == 2):
-            board[0][col] = game.player;
-            game.player = 1;
-        elif(board[0][col] == 0 and game.player == 1):
-            board[0][col] = game.player;
-            game.player = 2;
+        elif(board[5][col] == 0 and game.player2 == game.current_player):
+            board[5][col] = 2;
+            game.current_player = game.player1
+        elif(board[4][col] == 0 and game.player1 == game.current_player):
+            board[4][col] = 1;
+            game.current_player = game.player2
+        elif(board[4][col] == 0 and game.player2 == game.current_player):
+            board[4][col] = 2;
+            game.current_player = game.player1
+        elif(board[3][col] == 0 and game.player1 == game.current_player):
+            board[3][col] = 1;
+            game.current_player = game.player2
+        elif(board[3][col] == 0 and game.player2 == game.current_player):
+            board[3][col] = 2;
+            game.current_player = game.player1
+        elif(board[2][col] == 0 and game.player1 == game.current_player):
+            board[2][col] = 1;
+            game.current_player = game.player2
+        elif(board[2][col] == 0 and game.player2 == game.current_player):
+            board[2][col] = 2;
+            game.current_player = game.player1
+        elif(board[1][col] == 0 and game.player1 == game.current_player):
+            board[1][col] = 1;
+            game.current_player = game.player2
+        elif(board[1][col] == 0 and game.player2 == game.current_player):
+            board[1][col] = 2;
+            game.current_player = game.player1
+        elif(board[0][col] == 0 and game.player1 == game.current_player):
+            board[0][col] = 1;
+            game.current_player = game.player2
+        elif(board[0][col] == 0 and game.player2 == game.current_player):
+            board[0][col] = 2;
+            game.current_player = game.player1
         if(checkWin(board)==1):
             game.winner = 1
         if(checkWin(board)==2):

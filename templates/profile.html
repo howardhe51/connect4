@@ -6,25 +6,26 @@
 <!-- <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script> -->
   <!-- <title>{{ user.email }}</title> -->
 
+<link href="stylesheets/profile.css" rel="stylesheet">
 
-  <title id="prof_title">{{ user.email }}</title>
-  <link href="stylesheets/profile.css">
+<title id="prof_title">{{ user.email }}</title>
   <h1>{{ user.email }}'s Profile</h1>
-  Name: "name"   Image: <img src = "{{user.image}}">  <br>
-  Birthday: "month", "day", "year"      <br>
-  Email: current_user.email             <br>
-  score: "win" / "loss"                 <br>
+
+  Image: <img src="https://www.google.com/s2/photos/profile/{img_link}">  <br>
   <form action="/profile" method="post">
     <!-- This will only get the filename. Try using the jQuery file upload plugin.
       https://plugins.jquery.com/uploadfile/
    -->
-    <input id= "img" type="url" name="filename" accept="image/gif, image/jpeg, image/png, image/png, image/jpg">
+      <input type="url" name="img_link">
+    <!-- <input id= "img" type="url" name="filename" accept="image/gif, image/jpeg, image/png, image/png, image/jpg"> -->
     <!-- Add JavaScript to select this element and call the uploadFile jQuery method,
          passing in the filename that the input above has -->
-    <button>Upload</button>
+
+    <button id="upload" >Upload</button>
   </form/>
   <a href = "/">
-      <button>Home</button>
+    <button id="home">Home</button>
   </a>
 
+<IMG SRC="jb.gif">
 </html>

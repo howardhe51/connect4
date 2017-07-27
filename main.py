@@ -239,4 +239,3 @@ app = webapp2.WSGIApplication([
     ('/column', ColumnHandler),
     ('/profile', ProfileHandler),
     ], debug=True)
-#helloworld

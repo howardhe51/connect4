@@ -37,10 +37,13 @@ setInterval(refresh,1000);
 function refresh() {
     // make Ajax call here, inside the callback call:
     $.get('/column', function(game_json) {
-      if(game.winner!=null){
-        alert(game.winner);
+      game = JSON.parse(game_json);
+      if(game.winner==game.player1){
+        alert("Player One Wins!");
       }
-      game = JSON.parse(game_json)
+      else if(game.winner == game.player2 && game.winner != null){
+        alert("Player Two Wins!");
+      }
       console.log("Board" , game.board);
       // Update the number in the "like" element.
       //console.log("Game", game)

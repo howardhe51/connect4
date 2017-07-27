@@ -33,6 +33,7 @@ class Game(ndb.Model):
     player2 = ndb.StringProperty()
     current_player = ndb.StringProperty()
     winner = ndb.StringProperty()
+    game_key = ndb.Keyproperty()
     # Might want to have a `winner` UserProperty
     # Keep track of user1 and user2
 
@@ -178,7 +179,7 @@ class ColumnHandler(webapp2.RequestHandler):
     def get(self):
         game = Game.query().get()
         board = json.loads(game.board)
-        self.response.write(json.dumps({'board':board, 'winner':game.winner}))
+        self.response.write(json.dumps({'board':board, 'winner':game.winner, "player1":game.player1, "player2":game.player2}))
     def post(self):
         col = int(self.request.get('column'))
         game = Game.query().get()
@@ -222,7 +223,7 @@ class ColumnHandler(webapp2.RequestHandler):
         game.board = json.dumps(board)
         game.put()
         template = jinja_environment.get_template('templates/game.html')
-        self.response.write(json.dumps({'board':board, 'winner':game.winner}))
+        self.response.write(json.dumps({'board':board, 'winner':game.winner, "player1":game.player1, "player2":game.player2}))
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),

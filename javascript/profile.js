@@ -1,9 +1,0 @@
-// <script>
-// $(document).ready(function()
-// {
-	// $("#img").uploadFile({
-	// url:"templates/profile.html",
-	// fileName:"filename"
-	// });
-// });
-// </script>

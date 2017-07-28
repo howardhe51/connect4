@@ -11,14 +11,10 @@ jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.di
 
 class Profile(ndb.Model):
     name = ndb.StringProperty()
-    #Bmonth = ndb.IntegerProperty()
-    #Bday = ndb.IntegerProperty()
-    #Byear = ndb.IntegerProperty()
     email = ndb.StringProperty()
     username = ndb.StringProperty()
     win = ndb.IntegerProperty()
     lose = ndb.IntegerProperty()
-
 
 class User(ndb.Model):
     name = ndb.StringProperty()
@@ -27,16 +23,12 @@ class User(ndb.Model):
     user_key = ndb.StringProperty()
 
 class Game(ndb.Model):
-    # TODO: Game will also need a key
     board = ndb.JsonProperty()
     player1 = ndb.StringProperty()
     player2 = ndb.StringProperty()
     current_player = ndb.StringProperty()
     winner = ndb.StringProperty()
     game_key = ndb.KeyProperty()
-    # Might want to have a `winner` UserProperty
-    # Keep track of user1 and user2
-
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -70,8 +62,6 @@ class GameHandler(webapp2.RequestHandler):
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0]]
-        player = 1
-        winner = 0
         game = Game.query().get()
         current_user = users.get_current_user()
         if(game== None):
@@ -96,7 +86,6 @@ class ProfileHandler(webapp2.RequestHandler):
 
     def post(self):
         image = self.request.get('img_link')
-        # image is a "unicode" type, but we want it to be a string
         image = str(image)
         current_user = users.get_current_user()
         user_email = current_user.email()
@@ -111,14 +100,16 @@ class ProfileHandler(webapp2.RequestHandler):
         }
         template = jinja_environment.get_template('templates/profile.html')
         self.response.write(template.render(template_vars))
-        #self.redirect('/profile')
+
 class DeleteHandler(webapp2.RequestHandler):
     def post(self):
         game_query = Game.query()
         game = game_query.get()
-        game.key.delete()
+        if(game == None ):
+            string = "ARrrr"
+        elif(game.player1 == users.get_current_user().user_id() or game.player1 == users.get_current_user().user_id()):
+            game.key.delete()
         self.redirect("/")
-
 
 def checkWin(board):
     for row in range(0,6):
@@ -151,6 +142,7 @@ def checkEast(board, row, col):
             if(count==3):
                 return board[row][col]
     return 0
+
 def checkSouthEast(board, row, col):
     if(board[row][col] == 0):
         return 0;
@@ -161,6 +153,7 @@ def checkSouthEast(board, row, col):
             if(count==3):
                 return board[row][col]
     return 0
+
 def checkSouth(board, row, col):
     if(board[row][col] == 0):
         return 0;
@@ -171,6 +164,7 @@ def checkSouth(board, row, col):
             if(count==3):
                 return board[row][col]
     return 0
+
 def checkSouthWest(board, row, col):
     if(board[row][col] == 0):
         return 0;

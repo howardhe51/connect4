@@ -82,6 +82,15 @@ class GameHandler(webapp2.RequestHandler):
         game_key = game.key.urlsafe()
         print game_key
         self.redirect('/game')
+class DeleteHandler(webapp2.RequestHandler):
+    def post(self):
+        game_query = Game.query()
+        game = game_query.get()
+        if(game == None ):
+            string = "ARrrr"
+        elif(game.player1 == users.get_current_user().user_id() or game.player1 == users.get_current_user().user_id()):
+            game.key.delete()
+        self.redirect("/")
 
 class ProfileHandler(webapp2.RequestHandler):
     def get(self):
@@ -186,7 +195,7 @@ class ColumnHandler(webapp2.RequestHandler):
         col = int(self.request.get('column'))
         game = Game.query().get()
         board = json.loads(game.board)
-        if(game.player1 == users.get_current_user().user_id()):
+        if(game.player1 == users.get_current_user().user_id() and game.player2 != None):
             if(game.player1 == game.current_player):
                 if(board[5][col] == 0):
                     board[5][col] = 1
@@ -201,7 +210,7 @@ class ColumnHandler(webapp2.RequestHandler):
                 elif(board[0][col] == 0):
                     board[0][col] = 1
                 game.current_player = game.player2
-        elif(game.player2 == users.get_current_user().user_id()):
+        elif(game.player2 == users.get_current_user().user_id() and game.player1 != None):
             if(game.player2 == game.current_player):
                 if(board[5][col] == 0):
                     board[5][col] = 2
@@ -232,4 +241,5 @@ app = webapp2.WSGIApplication([
     ('/game', GameHandler),
     ('/column', ColumnHandler),
     ('/profile', ProfileHandler),
+    ('/delete', DeleteHandler),
     ], debug=True)

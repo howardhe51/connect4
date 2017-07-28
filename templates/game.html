@@ -5,23 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <style>
+body {
+  background-image: url("https://a.pomf.cat/bmltwz.png");
+  background-repeat: repeat;
+}
 
   .col{
     display: flex;
     flex-direction: column;
   }
   #board{
-    position: absolute;
-    margin-top: 5.5%;
-    margin-left: 32.5%;
+    position: relative;
+    left: 250px;
+    top: 79px;
     display: flex;
     flex-direction: row;
+  }
 
-  }
-  #board_img {
-    position: absolute;
-    margin-left: 15%;
-  }
  .square{
    width: 60px;
    height: 60px;
@@ -42,68 +42,76 @@
    background: red;
  }
 
+ #Eboard {
+   background-image: url("images/background2.png");
+   width: 1024px;
+   height: 678px;
+   margin: 5% auto;
+ }
 </style>
-
-<img id="board_img" src="images/background2.png" alt="Photo of Board">
-
-<div id="board">
-    <div id="0" class="col">
-      <div id="square00" class="square"></div>
-      <div id="square01" class="square"></div>
-      <div id="square02" class="square"></div>
-      <div id="square03" class="square"></div>
-      <div id="square04" class="square"></div>
-      <div id="square05" class="square"></div>
-    </div>
-    <div id="1" class="col">
-      <div id="square10" class="square"></div>
-      <div id="square11" class="square"></div>
-      <div id="square12" class="square"></div>
-      <div id="square13" class="square"></div>
-      <div id="square14" class="square"></div>
-      <div id="square15" class="square"></div>
-    </div>
-    <div id="2" class="col">
-      <div id="square20" class="square"></div>
-      <div id="square21" class="square"></div>
-      <div id="square22" class="square"></div>
-      <div id="square23" class="square"></div>
-      <div id="square24" class="square"></div>
-      <div id="square25" class="square"></div>
-    </div>
-    <div id="3" class="col">
-      <div id="square30" class="square"></div>
-      <div id="square31" class="square"></div>
-      <div id="square32" class="square"></div>
-      <div id="square33" class="square"></div>
-      <div id="square34" class="square"></div>
-      <div id="square35" class="square"></div>
-    </div>
-    <div id="4" class="col">
-      <div id="square40" class="square"></div>
-      <div id="square41" class="square"></div>
-      <div id="square42" class="square"></div>
-      <div id="square43" class="square"></div>
-      <div id="square44" class="square"></div>
-      <div id="square45" class="square"></div>
-    </div>
-    <div id="5" class="col">
-      <div id="square50" class="square"></div>
-      <div id="square51" class="square"></div>
-      <div id="square52" class="square"></div>
-      <div id="square53" class="square"></div>
-      <div id="square54" class="square"></div>
-      <div id="square55" class="square"></div>
-    </div>
-    <div id="6" class="col">
-      <div id="square60" class="square"></div>
-      <div id="square61" class="square"></div>
-      <div id="square62" class="square"></div>
-      <div id="square63" class="square"></div>
-      <div id="square64" class="square"></div>
-      <div id="square65" class="square"></div>
+<body>
+<div id="Eboard">
+    <!-- <img id="board_img" src="images/background2.png" alt="Photo of Board"> -->
+    <div id="board">
+        <div id="0" class="col">
+          <div id="square00" class="square"></div>
+          <div id="square01" class="square"></div>
+          <div id="square02" class="square"></div>
+          <div id="square03" class="square"></div>
+          <div id="square04" class="square"></div>
+          <div id="square05" class="square"></div>
+        </div>
+        <div id="1" class="col">
+          <div id="square10" class="square"></div>
+          <div id="square11" class="square"></div>
+          <div id="square12" class="square"></div>
+          <div id="square13" class="square"></div>
+          <div id="square14" class="square"></div>
+          <div id="square15" class="square"></div>
+        </div>
+        <div id="2" class="col">
+          <div id="square20" class="square"></div>
+          <div id="square21" class="square"></div>
+          <div id="square22" class="square"></div>
+          <div id="square23" class="square"></div>
+          <div id="square24" class="square"></div>
+          <div id="square25" class="square"></div>
+        </div>
+        <div id="3" class="col">
+          <div id="square30" class="square"></div>
+          <div id="square31" class="square"></div>
+          <div id="square32" class="square"></div>
+          <div id="square33" class="square"></div>
+          <div id="square34" class="square"></div>
+          <div id="square35" class="square"></div>
+        </div>
+        <div id="4" class="col">
+          <div id="square40" class="square"></div>
+          <div id="square41" class="square"></div>
+          <div id="square42" class="square"></div>
+          <div id="square43" class="square"></div>
+          <div id="square44" class="square"></div>
+          <div id="square45" class="square"></div>
+        </div>
+        <div id="5" class="col">
+          <div id="square50" class="square"></div>
+          <div id="square51" class="square"></div>
+          <div id="square52" class="square"></div>
+          <div id="square53" class="square"></div>
+          <div id="square54" class="square"></div>
+          <div id="square55" class="square"></div>
+        </div>
+        <div id="6" class="col">
+          <div id="square60" class="square"></div>
+          <div id="square61" class="square"></div>
+          <div id="square62" class="square"></div>
+          <div id="square63" class="square"></div>
+          <div id="square64" class="square"></div>
+          <div id="square65" class="square"></div>
+        </div>
     </div>
 </div>
+</body>
 <form action="/delete" method="post">
       <button>Quit Game</button>
 </form>

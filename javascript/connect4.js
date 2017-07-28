@@ -34,6 +34,10 @@ function drawBoard(game) {
 
 $(".col").click(clickColumn);
 setInterval(refresh,1000);
+setInterval(deleteGame,1000);
+
+
+}
 function refresh() {
     // make Ajax call here, inside the callback call:
     $.get('/column', function(game_json) {

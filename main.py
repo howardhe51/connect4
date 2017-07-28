@@ -112,6 +112,13 @@ class ProfileHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/profile.html')
         self.response.write(template.render(template_vars))
         #self.redirect('/profile')
+class DeleteHandler(webapp2.RequestHandler):
+    def post(self):
+        game_query = Game.query()
+        game = game_query.get()
+        game.key.delete()
+        self.redirect("/")
+
 
 def checkWin(board):
     for row in range(0,6):
@@ -230,4 +237,5 @@ app = webapp2.WSGIApplication([
     ('/game', GameHandler),
     ('/column', ColumnHandler),
     ('/profile', ProfileHandler),
+    ('/delete', DeleteHandler),
     ], debug=True)

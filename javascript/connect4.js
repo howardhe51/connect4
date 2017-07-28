@@ -35,16 +35,19 @@ function drawBoard(game) {
 $(".col").click(clickColumn);
 setInterval(refresh,1000);
 
-
+var gate = 0;
 function refresh() {
     // make Ajax call here, inside the callback call:
     $.get('/column', function(game_json) {
       game = JSON.parse(game_json);
-      if(game.winner==game.player1){
+      if(game.winner==game.player1 && gate == 0){
         alert("Player One Wins!");
+        gate =1;
+
       }
-      else if(game.winner == game.player2 && game.winner != null){
+      else if(game.winner == game.player2 && game.winner != null && gate == 0){
         alert("Player Two Wins!");
+        gate =1;
       }
       console.log("Board" , game.board);
       // Update the number in the "like" element.

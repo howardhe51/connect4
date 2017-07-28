@@ -11,9 +11,6 @@ jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.di
 
 class Profile(ndb.Model):
     name = ndb.StringProperty()
-    #Bmonth = ndb.IntegerProperty()
-    #Bday = ndb.IntegerProperty()
-    #Byear = ndb.IntegerProperty()
     email = ndb.StringProperty()
     username = ndb.StringProperty()
     win = ndb.IntegerProperty()
@@ -27,16 +24,12 @@ class User(ndb.Model):
     user_key = ndb.StringProperty()
 
 class Game(ndb.Model):
-    # TODO: Game will also need a key
     board = ndb.JsonProperty()
     player1 = ndb.StringProperty()
     player2 = ndb.StringProperty()
     current_player = ndb.StringProperty()
     winner = ndb.StringProperty()
     game_key = ndb.KeyProperty()
-    # Might want to have a `winner` UserProperty
-    # Keep track of user1 and user2
-
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -70,8 +63,6 @@ class GameHandler(webapp2.RequestHandler):
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0]]
-        player = 1
-        winner = 0
         game = Game.query().get()
         current_user = users.get_current_user()
         if(game== None):

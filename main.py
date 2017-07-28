@@ -52,8 +52,19 @@ class MainHandler(webapp2.RequestHandler):
 
 class GameHandler(webapp2.RequestHandler):
     def get(self):
+        image = self.request.get('img_link')
+        image = str(image)
+        current_user = users.get_current_user()
+        # Only query for User models that have the email of the current user
+        user1 = User.query().filter(User.email == player)
+        user2 =
+        template_vars = {
+            "img_link": image,
+            "user": user,
+
+        }
         template = jinja_environment.get_template('templates/game.html')
-        self.response.write(template.render())
+        self.response.write(template.render(template_vars))
 
     def post(self):
         gamemode = self.request.get('dropbox')
@@ -186,7 +197,7 @@ class ColumnHandler(webapp2.RequestHandler):
         col = int(self.request.get('column'))
         game = Game.query().get()
         board = json.loads(game.board)
-        if(game.player1 == users.get_current_user().user_id()):
+        if(game.player1 == users.get_current_user().user_id() and game.player2 != None):
             if(game.player1 == game.current_player):
                 if(board[5][col] == 0):
                     board[5][col] = 1
@@ -201,7 +212,7 @@ class ColumnHandler(webapp2.RequestHandler):
                 elif(board[0][col] == 0):
                     board[0][col] = 1
                 game.current_player = game.player2
-        elif(game.player2 == users.get_current_user().user_id()):
+        elif(game.player2 == users.get_current_user().user_id() and game.player2 != None):
             if(game.player2 == game.current_player):
                 if(board[5][col] == 0):
                     board[5][col] = 2

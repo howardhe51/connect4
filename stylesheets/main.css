@@ -80,7 +80,9 @@ h1  {
 p {
   font-family: arial black;
   color: black;
-  margin: 0
+  margin-left: 1 px;
+  margin-top: 25px;
+
 }
 
 #profileb {

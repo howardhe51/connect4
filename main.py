@@ -52,19 +52,8 @@ class MainHandler(webapp2.RequestHandler):
 
 class GameHandler(webapp2.RequestHandler):
     def get(self):
-        image = self.request.get('img_link')
-        image = str(image)
-        current_user = users.get_current_user()
-        # Only query for User models that have the email of the current user
-        user1 = User.query().filter(User.email == player)
-        user2 =
-        template_vars = {
-            "img_link": image,
-            "user": user,
-
-        }
         template = jinja_environment.get_template('templates/game.html')
-        self.response.write(template.render(template_vars))
+        self.response.write(template.render())
 
     def post(self):
         gamemode = self.request.get('dropbox')

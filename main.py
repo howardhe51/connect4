@@ -8,7 +8,7 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
-#test1
+#test3
 class Profile(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()

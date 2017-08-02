@@ -63,12 +63,16 @@ class GameHandler(webapp2.RequestHandler):
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0]]
-        game = Game.query().get()
-        current_user = users.get_current_user()
-        if(game== None):
-            game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id())
-        elif(game.player2==None):
-            game.player2 = current_user.user_id()
+                current_user = users.get_current_user()
+        game = Game.query().filter(Game.player1==current_user.user_id()).get()
+        logging.info("Current Id is: %s" + current_user.user_id())
+        if(game== None and Game.query().filter(Game.player2==current_user.user_id()).get() == None):
+            newGame = Game.query().filter(Game.player1!=None).get()
+            if(newGame!= None and newGame.player2==None):
+                game = Game.query().filter(Game.player1!=None).get()
+                game.player2 = current_user.user_id()
+            else:
+                game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id())
         game.put()
         game_key = game.key.urlsafe()
         print game_key

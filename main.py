@@ -63,7 +63,7 @@ class GameHandler(webapp2.RequestHandler):
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0]]
-                current_user = users.get_current_user()
+        current_user = users.get_current_user()
         game = Game.query().filter(Game.player1==current_user.user_id()).get()
         logging.info("Current Id is: %s" + current_user.user_id())
         if(game== None and Game.query().filter(Game.player2==current_user.user_id()).get() == None):
@@ -72,10 +72,9 @@ class GameHandler(webapp2.RequestHandler):
                 game = Game.query().filter(Game.player1!=None).get()
                 game.player2 = current_user.user_id()
             else:
-                game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id())
+                game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id(),)
+        game.game_key = game.key.urlsafe()
         game.put()
-        game_key = game.key.urlsafe()
-        print game_key
         self.redirect('/game')
 class DeleteHandler(webapp2.RequestHandler):
     def post(self):

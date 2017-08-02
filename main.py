@@ -56,7 +56,6 @@ class GameHandler(webapp2.RequestHandler):
         self.response.write(template.render())
 
     def post(self):
-        gamemode = self.request.get('dropbox')
         board = [ [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0],
@@ -72,8 +71,9 @@ class GameHandler(webapp2.RequestHandler):
                 game = Game.query().filter(Game.player1!=None).get()
                 game.player2 = current_user.user_id()
             else:
-                game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id(),)
-        game.game_key = game.key.urlsafe()
+                game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id())
+        game_key = game.put()
+        game.game_key = game_key
         game.put()
         self.redirect('/game')
 class DeleteHandler(webapp2.RequestHandler):

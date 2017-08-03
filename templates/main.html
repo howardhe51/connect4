@@ -9,13 +9,21 @@
       </div>
       <h1 id="game_title">Connect 4</h1>
 
-        <form action="/game" method="post">
-          <section class="select_mode">
+        <form action="/create" method="post">
+          <section class="create_game">
             <p>
              Play a friend now! </p>
-              <button id="subb">Submit</button>
+              <button id="subb">Create Game</button>
           </section>
         </form>
+        {% for game in games %}
+           <a href="/game?key={{game.key.urlsafe()}}">
+             <form method="post" action="/game">
+               <input type="hidden" name="key" value="{{game.key.urlsafe()}}">
+               <button>{{game.player1}}</button>
+             </form>
+           </a>
+        {% endfor %}
         <a href = "/profile">
             <button id ="profileb">Profile</button>
         </a>

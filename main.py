@@ -8,7 +8,7 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
-#test3
+
 class Profile(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
@@ -42,19 +42,17 @@ class MainHandler(webapp2.RequestHandler):
         user = User(user_key = userID)
         login_url = users.create_login_url('/')
         logout_url = users.create_logout_url('/')
+        games = Game.query().fetch()
         template_vars = {
             'current_user': current_user,
             'logout_url': logout_url,
             'login_url': login_url,
+            'games': games,
         }
         template = jinja_environment.get_template('templates/main.html')
         self.response.write(template.render(template_vars))
 
-class GameHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/game.html')
-        self.response.write(template.render())
-
+class CreateGameHandler(webapp2.RequestHandler):
     def post(self):
         board = [ [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0],
@@ -63,19 +61,28 @@ class GameHandler(webapp2.RequestHandler):
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0]]
         current_user = users.get_current_user()
-        game = Game.query().filter(Game.player1==current_user.user_id()).get()
-        logging.info("Current Id is: %s" + current_user.user_id())
-        if(game== None and Game.query().filter(Game.player2==current_user.user_id()).get() == None):
-            newGame = Game.query().filter(Game.player1!=None).get()
-            if(newGame!= None and newGame.player2==None):
-                game = Game.query().filter(Game.player1!=None).get()
-                game.player2 = current_user.user_id()
-            else:
-                game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id())
+        game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id())
         game_key = game.put()
         game.game_key = game_key
         game.put()
-        self.redirect('/game')
+        url = "/game?key=" + game.key.urlsafe()
+        self.redirect(url)
+
+class GameHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/game.html')
+        self.response.write(template.render())
+    def post(self):
+        current_user = users.get_current_user()
+        urlsafe_key = self.request.get("key")
+        game_key = ndb.Key(urlsafe = urlsafe_key)
+        game = game_key.get()
+        url = "/game?key=" + urlsafe_key
+        if(game.player2 == None):
+            game.player2= current_user.user_id()
+        game.put()
+        self.redirect(url)
+
 class DeleteHandler(webapp2.RequestHandler):
     def post(self):
         game_query = Game.query()
@@ -232,6 +239,7 @@ class ColumnHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/create', CreateGameHandler),
     ('/game', GameHandler),
     ('/column', ColumnHandler),
     ('/profile', ProfileHandler),

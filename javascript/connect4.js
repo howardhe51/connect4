@@ -2,9 +2,7 @@ function clickColumn() {
   var button = $(this);
   var col = Number($(this).attr('id'));
   $.post('/column', {'column': col}, function(game_json) {
-    // Update the number in the "like" element.
     game = JSON.parse(game_json)
-    console.log("Game", game.board)
     drawBoard(game.board);
   })}
 
@@ -49,11 +47,7 @@ function refresh() {
         alert("Player Two Wins!");
         gate =1;
       }
-      console.log("Board" , game.board);
-      // Update the number in the "like" element.
-      //console.log("Game", game)
-      //$(col).text(game);
+
       drawBoard(game.board);
     })
-    // ...
 }

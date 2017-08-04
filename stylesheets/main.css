@@ -117,9 +117,9 @@ p {
   font-family: Arial Black;
   margin-top: 60px;
   margin-right: 0px;
-  position: absolute;
-  top: 0;
-  left: 4;
+  position: relative;
+  top: 200px;
+  left: 500px;
   background-color: blue;
   border: black;
   border: #00ffff;

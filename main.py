@@ -30,6 +30,7 @@ class Game(ndb.Model):
     current_player = ndb.StringProperty()
     winner = ndb.StringProperty()
     game_key = ndb.KeyProperty()
+    game_key_string = ndb.StringProperty()
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -64,8 +65,9 @@ class CreateGameHandler(webapp2.RequestHandler):
         game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id())
         game_key = game.put()
         game.game_key = game_key
+        game.game_key_string = game.key.urlsafe()
         game.put()
-        url = "/game?key=" + game.key.urlsafe()
+        url = "/game?key=" + game.game_key_string
         self.redirect(url)
 
 class GameHandler(webapp2.RequestHandler):
@@ -78,18 +80,18 @@ class GameHandler(webapp2.RequestHandler):
         game_key = ndb.Key(urlsafe = urlsafe_key)
         game = game_key.get()
         url = "/game?key=" + urlsafe_key
-        if(game.player2 == None):
+        if(game.player2 == None and game.player1 != current_user.user_id()):
             game.player2= current_user.user_id()
         game.put()
         self.redirect(url)
 
 class DeleteHandler(webapp2.RequestHandler):
     def post(self):
-        game_query = Game.query()
-        game = game_query.get()
+        current_user = users.get_current_user()
+        game = Game.query().filter(ndb.OR(Game.player1 == current_user.user_id(), Game.player2== current_user.user_id())).get()
         if(game == None ):
             string = "ARrrr"
-        elif(game.player1 == users.get_current_user().user_id() or game.player1 == users.get_current_user().user_id()):
+        elif(game.player1 == current_user.user_id() or game.player2 == current_user.user_id()):
             game.key.delete()
         self.redirect("/")
 
@@ -189,13 +191,20 @@ def checkSouthWest(board, row, col):
 
 class ColumnHandler(webapp2.RequestHandler):
     def get(self):
-        game = Game.query().get()
+        current_user = users.get_current_user()
+        # game = Game.query().get()
+        game = Game.query().filter(Game.current_player == current_user.user_id()).get()
+        logging.info(game)
         board = json.loads(game.board)
         self.response.write(json.dumps({'board':board, 'winner':game.winner, "player1":game.player1, "player2":game.player2}))
+
     def post(self):
         col = int(self.request.get('column'))
-        game = Game.query().get()
+        current_user = users.get_current_user()
+        game = Game.query().filter(Game.current_player == current_user.user_id()).get()
+        logging.info(game)
         board = json.loads(game.board)
+        #logging.info(board)
         if(game.player1 == users.get_current_user().user_id() and game.player2 != None):
             if(game.player1 == game.current_player):
                 if(board[5][col] == 0):
@@ -230,8 +239,6 @@ class ColumnHandler(webapp2.RequestHandler):
             game.winner = game.player1
         if(checkWin(board)==2):
             game.winner = game.player2
-        logging.info(board)
-        logging.info(game.winner)
         game.board = json.dumps(board)
         game.put()
         template = jinja_environment.get_template('templates/game.html')

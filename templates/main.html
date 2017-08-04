@@ -11,8 +11,7 @@
 
         <form action="/create" method="post">
           <section class="create_game">
-            <p>
-             Play a friend now! </p>
+            <p> <font size="6"> Play a friend now! </font> </p>
               <button id="subb">Create Game</button>
           </section>
         </form>
@@ -20,12 +19,15 @@
            <a href="/game?key={{game.key.urlsafe()}}">
              <form method="post" action="/game">
                <input type="hidden" name="key" value="{{game.key.urlsafe()}}">
-               <button>{{game.player1}}</button>
+               <form action= {{game.player1}} >
+               <input id="link"  type="submit" value= "Room" />
+          </form>
+               <!-- <button id="link">{{game.player1}}</button> -->
              </form>
            </a>
         {% endfor %}
         <a href = "/profile">
-            <button id ="profileb">Profile</button>
+            <button id ="profileb">Profile Page</button>
         </a>
       <a href="{{ logout_url }}"><button id="log_button2">Logout</button></a>
 

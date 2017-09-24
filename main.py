@@ -26,7 +26,9 @@ class User(ndb.Model):
 class Game(ndb.Model):
     board = ndb.JsonProperty()
     player1 = ndb.StringProperty()
+    player1email = ndb.StringProperty()
     player2 = ndb.StringProperty()
+    player2email = ndb.StringProperty()
     current_player = ndb.StringProperty()
     winner = ndb.StringProperty()
     game_key = ndb.KeyProperty()
@@ -62,7 +64,7 @@ class CreateGameHandler(webapp2.RequestHandler):
                   [0,0,0,0,0,0,0],
                   [0,0,0,0,0,0,0]]
         current_user = users.get_current_user()
-        game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id())
+        game = Game(board = json.dumps(board),current_player = current_user.user_id(),player1 = current_user.user_id(),player1email = current_user.email())
         game_key = game.put()
         game.game_key = game_key
         game.game_key_string = game.key.urlsafe()
@@ -82,6 +84,7 @@ class GameHandler(webapp2.RequestHandler):
         url = "/game?key=" + urlsafe_key
         if(game.player2 == None and game.player1 != current_user.user_id()):
             game.player2= current_user.user_id()
+	    game.player2email = current_user.user_id()
         game.put()
         self.redirect(url)
 

@@ -79,20 +79,14 @@ p {
   font-size: 23px;
 }
 
-.select_mode {
-   margin-top: 13%;
-   font-size: 20px;
-   position: fixed;
-   left: 45%;
- }
 
 #profileb {
   line-height: 30px;
   width: 124px;
   font-family: Arial Black;
   margin-left: 40%;
-  margin-top: 1%;
-  position: absolute;
+  margin-top: 100px;
+  position: fixed;
   background-color: blue;
   border: black;
   border: magenta;
@@ -113,8 +107,7 @@ p {
   width: 124px;
   font-family: Arial Black;
   margin-left: 40%;
-  margin-top: 0%;
-  position: absolute;
+  position: fixed;
   background-color: blue;
   border: black;
   border: #00ffff;
@@ -140,13 +133,13 @@ p {
 
 #link{
  line-height: 30px;
- width: 124px;
+ width: 400px;
  font-family: Arial Black;
  margin-left: 0%;
- margin-top: 1%;
+ margin-top: -20%;
  position: relative;
- top: 10%;
- left: 1%;
+ top: 0%;
+ left: 0%;
  background-color: blue;
  border: black;
  border: #FFE4E1;
@@ -158,5 +151,5 @@ p {
  text-align: left;
  text-decoration: none;
  display: inline-block;
- font-size:5px;
+ font-size:15px;
 }

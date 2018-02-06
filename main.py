@@ -84,7 +84,7 @@ class GameHandler(webapp2.RequestHandler):
         url = "/game?key=" + urlsafe_key
         if(game.player2 == None and game.player1 != current_user.user_id()):
             game.player2= current_user.user_id()
-	    game.player2email = current_user.user_id()
+        game.player2email = current_user.user_id()
         game.put()
         self.redirect(url)
 
@@ -93,7 +93,7 @@ class DeleteHandler(webapp2.RequestHandler):
         current_user = users.get_current_user()
         game = Game.query().filter(ndb.OR(Game.player1 == current_user.user_id(), Game.player2== current_user.user_id())).get()
         if(game == None ):
-            string = "ARrrr"
+            pass
         elif(game.player1 == current_user.user_id() or game.player2 == current_user.user_id()):
             game.key.delete()
         self.redirect("/")
